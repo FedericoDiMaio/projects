@@ -39,7 +39,7 @@
 
         echo 'Selected workstation: ' . htmlspecialchars($workstation_data['nome_stazione']) . '<br>';
         echo 'Selected direction: ' . htmlspecialchars($selected_direction) . '<br>';
-        echo 'Round trip: ' . ($round_trip ? 'Yes' : 'No') . '<br>';
+        
         //  TODO Aggiungi il codice per ottenere e visualizzare $km_stazione
     }
     ?>
@@ -47,8 +47,8 @@
         <div class="logo">TrainStation</div>
         <nav>
             <ul>
-                <li><a href="./login/login.php">Login</a></li>
-                <li><a href="./registrazione/registrazione.php">Signup</a></li>
+                <li><a href="./login.php">Login</a></li>
+                <li><a href="./registrazione.php">Signup</a></li>
             </ul>
         </nav>
     </header>

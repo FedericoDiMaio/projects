@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Basi Di Dati</title>
-<link rel="stylesheet" href="./newStart.css">
+
 </head>
 <body>
 	<header>
