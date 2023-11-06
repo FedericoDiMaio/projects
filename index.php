@@ -14,7 +14,7 @@
 	<div class="container">
 		<div class="project">
 			
-			<a href= "http://localhost/progetti_bdc/index.php"><h2>Train Station</h2></a>
+			<a href= "http://localhost/progetti_bdc/projects/train_station/landing.php"><h2>Train Station</h2></a>
             <p>Il progetto prevede lo sviluppo di una web application per la vendita di biglietti ferroviari per una società che opera su una linea turistica di 54 km con 10 stazioni. I visitatori possono acquistare biglietti online, prenotando i posti a sedere. Sono previste 4 coppie di treni storici al giorno nei giorni festivi, tutto l'anno, e 1 coppia di treni nei giorni feriali dal 1° giugno al 30 settembre. Il costo del biglietto varia in base alla distanza del viaggio.
 				Gli utenti registrati possono selezionare la tratta, la data e acquistare il biglietto con una prenotazione del posto a sedere. L'acquisto del biglietto avviene tramite la piattaforma Pay Steam utilizzando una web API. È importante notare che i viaggiatori non possono viaggiare in piedi per motivi di sicurezza.
 				Sono disponibili vari profili di backoffice, tra cui il backoffice amministrativo, che può verificare l'occupazione dei treni e richiedere treni straordinari, e il backoffice di esercizio, che può comporre i convogli, verificare la disponibilità del materiale rotabile e creare gli orari dei treni in base ai requisiti. La velocità massima sulla linea è di 50 km/h.
