@@ -33,26 +33,26 @@ $q->execute();
 $q->setFetchMode(PDO::FETCH_ASSOC); // fetchiamo e passiamo a rassegna tutte le righe
 $rows = $q->rowCount(); // contiamo righe
 
-if ($rows >-1) { // utente esiste
+if ($rows > 0) { 
     while ($row = $q->fetch()) {
-    
+        session_start();
         $_SESSION['nome'] = $row['nome'];
         $_SESSION['cognome'] = $row['cognome'];
 
         if ($row['ruolo'] === 'registrato' && $row['password'] === $password) {
-            header("location: ../profilo/registrato.php");
+            header("location: ./utenteRegistrato.php");
             exit;
 
         } else if ($row['ruolo'] === 'amministrativo' && $row['password'] === $password) {
-            header("location: ../profilo/amministrativo.php");
+            header("location: ./utenteAmministrativo.php");
             exit;
 
         } else if ($row['ruolo'] === 'esercizio' && $row['password'] === $password) {
-            header("location: ../profilo/esercizio.php");
+            header("location: ./utenteComposizione.php");
             exit;
 
         } else {
-            header("location: ../train_station/loginError.html");
+            header("location: ./loginError.html");
             exit;
         }
     }

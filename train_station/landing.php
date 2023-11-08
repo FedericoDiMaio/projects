@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <title>TrainStation</title>
-    </head>
-
     <body>
 
         <?php
@@ -28,7 +24,7 @@
                 $round_trip = isset($_POST['round_trip']) && $_POST['round_trip'] == 'yes';
 
                 if (empty($selected_workstation) || empty($selected_direction)) {
-                    echo 'Please select a workstation and a direction';
+                    echo 'Please select a station';
                     exit;
                 }
 
@@ -47,7 +43,7 @@
         ?>
         
         <header>
-            <div class="logo">TrainStation</div>
+            <div class="logo">TrainStation landing</div>
             <nav>
                 <ul>
                     <li><a href="./login.html">Login</a></li>
