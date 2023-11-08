@@ -28,7 +28,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' ) {
     $email = $_POST[ 'email' ];
     $password = $_POST[ 'password' ];
 
-    $query = $db->prepare( 'INSERT INTO utente (nome, cognome, email, password, data_di_nascita, residenza, telefono) VALUES (:nome, :cognome, :email, :password, :data_di_nascita, :residenza, :telefono)' );
+    $query = $db->prepare('INSERT INTO utente (nome, cognome, email, password) VALUES (:nome, :cognome, :email, :password)');
     $query->bindParam( ':nome', $nome, PDO::PARAM_STR );
     $query->bindParam( ':cognome', $cognome, PDO::PARAM_STR );
     $query->bindParam( ':email', $email, PDO::PARAM_STR );

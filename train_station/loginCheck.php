@@ -33,7 +33,7 @@ $q->execute();
 $q->setFetchMode(PDO::FETCH_ASSOC); // fetchiamo e passiamo a rassegna tutte le righe
 $rows = $q->rowCount(); // contiamo righe
 
-if ($rows > 0) { // utente esiste
+if ($rows >-1) { // utente esiste
     while ($row = $q->fetch()) {
     
         $_SESSION['nome'] = $row['nome'];
@@ -52,7 +52,7 @@ if ($rows > 0) { // utente esiste
             exit;
 
         } else {
-            header("location: ../error.php");
+            header("location: ../train_station/loginError.html");
             exit;
         }
     }
