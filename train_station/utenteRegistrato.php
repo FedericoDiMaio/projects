@@ -21,18 +21,18 @@
     }
 
     // Verificare se il modulo è stato inviato
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Recuperare la postazione di lavoro selezionata, la direzione e il viaggio di andata e ritorno dai dati POST
-        $selected_station = isset($_POST['station']) ? intval($_POST['station']) : null;
+   // if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
+    //$selected_station = isset($_POST['stazione']) ? intval($_POST['stazione']) : null;
         //$selected_direction = isset($_POST['direction']) ? $_POST['direction'] : null;
         //$round_trip = isset($_POST['round_trip']) && $_POST['round_trip'] == 'yes';
 
         // Validare i dati inviati
-        if (empty($selected_station)) {
-            echo 'Please select a station';
-            exit;
-        }
-    }
+    //    if (empty($selected_station)) {
+    //        echo 'Please select a station';
+    //        exit;
+    //    }
+   // }
     ?>
 
 <header>

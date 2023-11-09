@@ -1,105 +1,159 @@
 <!DOCTYPE html>
 <html>
 
-    <body>
+<body>
 
-        <?php
+    <?php
 
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "train_station";
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "train_station";
 
-            try {
-                $db = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                print "ERRORE!: " . $e->getMessage() . "<br>";
-                die();
+        try {
+            $db = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            print "ERRORE!: " . $e->getMessage() . "<br>";
+            die();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $stazione_partenza = isset($_POST['partenza']) ? intval($_POST['partenza']) : null;
+
+            if (empty($stazione_partenza)) {
+                echo 'Seleziona una stazione';
+                exit;
             }
 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $selected_workstation = isset($_POST['workstation']) ? intval($_POST['workstation']) : null;
-                $selected_direction = isset($_POST['direction']) ? $_POST['direction'] : null;
-                $round_trip = isset($_POST['round_trip']) && $_POST['round_trip'] == 'yes';
+        
+            // Query per ottenere tutti i dati della stazione selezionata
 
-                if (empty($selected_workstation) || empty($selected_direction)) {
-                    echo 'Please select a station';
-                    exit;
+            $sql_stazione_partenza = "SELECT * FROM stazione WHERE id_stazione = :id";
+            $stmt_stazione_partenza = $db->prepare($sql_stazione_partenza);
+            $stmt_stazione_partenza->bindValue(':id', $stazione_partenza, PDO::PARAM_INT);
+            $stmt_stazione_partenza->execute();
+
+            $dati_stazione_partenza = $stmt_stazione_partenza->fetch(PDO::FETCH_ASSOC);
+
+            echo 'Stazione di partenza: ' . htmlspecialchars($dati_stazione_partenza['nome_stazione']) . '<br>';
+
+            
+        }
+
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $stazione_destinazione = isset($_POST['destinazione']) ? intval($_POST['destinazione']) : null;
+
+            if (empty($stazione_destinazione)) {
+                echo 'Seleziona una stazione';
+                exit;
+            }
+
+            // Query per ottenere la posizione_km della stazione selezionata
+            $sql_posizione_km_destinazione = "SELECT posizone_km FROM stazione WHERE id_stazione = :id";
+            $stmt_posizione_km_destinazione = $db->prepare($sql_posizione_km_destinazione);
+            $stmt_posizione_km_destinazione->bindValue(':id', $stazione_destinazione, PDO::PARAM_INT);
+            $stmt_posizione_km_destinazione->execute();
+
+            $dati_posizione_km_destinazione = $stmt_posizione_km_destinazione->fetch(PDO::FETCH_ASSOC);
+            
+            // Calcola la somma dei campi posizione_km delle due stazioni selezionate
+            $somma_posizione_km_destinazione = floatval($dati_posizione_km_destinazione['posizone_km']);
+
+        
+            // Query per ottenere tutti i dati della stazione selezionata
+            $sql_stazione_destinazione = "SELECT * FROM stazione WHERE id_stazione = :id";
+            $stmt_stazione_destinazion = $db->prepare($sql_stazione_destinazione);
+            $stmt_stazione_destinazion->bindValue(':id', $stazione_destinazione, PDO::PARAM_INT);
+            $stmt_stazione_destinazion->execute();
+
+            $dati_stazione_destinazione = $stmt_stazione_destinazion->fetch(PDO::FETCH_ASSOC);
+
+            
+            echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['nome_stazione']) . '<br>';
+
+            // Moltiplica la somma dei km per 0,25 cent di euro
+            $costo_km = 0.25;
+            $costo_biglietto = $somma_posizione_km_destinazione * $costo_km;
+    
+            // Stampa il costo del biglietto
+            echo 'Costo del biglietto: ' . $costo_biglietto . ' euro';
+            
+        }
+
+    ?>
+
+
+
+    <header>
+        <div class="logo">TrainStation landing</div>
+        <nav>
+            <ul>
+                <li><a href="./login.html">Login</a></li>
+                <li><a href="./registrazione.html">Signup</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="partenza">Stazione di partenza</label>
+
+            <select name="partenza">
+
+                <?php
+                $sql = "SELECT * FROM stazione";
+                $result = $db->query($sql);
+
+                if ($result->rowCount() > 0) {
+                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<option value="' . intval($row["id_stazione"]) . '">' . htmlspecialchars($row["nome_stazione"]) . '</option>';
+                    }
                 }
+                
+                ?>
 
-                $sql = "SELECT * FROM stazione WHERE id = :id";
-                $stmt = $db->prepare($sql);
-                $stmt->bindValue(':id', $selected_workstation, PDO::PARAM_INT);
-                $stmt->execute();
+            </select>
+                    
+        </div>
 
-                $workstation_data = $stmt->fetch(PDO::FETCH_ASSOC);
+        <div class="form-group">
+            <label for="destinazione">Stazione di destinazione</label>
 
-                echo 'Selected workstation: ' . htmlspecialchars($workstation_data['nome_stazione']) . '<br>';
-                echo 'Selected direction: ' . htmlspecialchars($selected_direction) . '<br>';
+            <select name="destinazione">
 
-                //  TODO Aggiungi il codice per ottenere e visualizzare $km_stazione
-            }
-        ?>
-        
-        <header>
-            <div class="logo">TrainStation landing</div>
-            <nav>
-                <ul>
-                    <li><a href="./login.html">Login</a></li>
-                    <li><a href="./registrazione.html">Signup</a></li>
-                </ul>
-            </nav>
-        </header>
+                <?php
 
-            <form method="POST">
-                <div class="form-group">
-                    <label for="departure">Stazione di partenza</label>
+                    $result = $db->query($sql);
 
-                    <select name="workstation">
+                    if ($result->rowCount() > 0) {
+                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                            echo '<option value="' . intval($row["id_stazione"]) . '">' . htmlspecialchars($row["nome_stazione"]) . '</option>';
+                        }
+                    }
+                    
+                ?>
 
-                        <?php
-                            $sql = "SELECT * FROM stazione";
-                            $result = $db->query($sql);
+                
+            </select>
 
-                            if ($result->rowCount() > 0) {
-                                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                                    echo '<option value="' . intval($row["id"]) . '">' . htmlspecialchars($row["nome_stazione"]) . '</option>';
-                                }
-                            }
-                        ?>
+        </div>
 
-                    </select>
+        <div class="form-group">
+            <label for="data-partenza">Data di partenza</label>
+            <input type="date" id="data-partenza" name="data-partenza" required>
+        </div>
 
-                </div>
+        <div class="form-group">
+            <label for="data-ritorno">Data di ritorno</label>
+            <input type="date" id="data-ritorno" name="data-ritorno" required>
+        </div>
 
-                <div class="form-group">
-                    <label for="destination">Stazione di destinazione</label>
+        <button type="submit">Cerca treni</button>
 
-                    <select name="destination">
+    </form>
 
-                        <?php
-                        // TODO Ripeti il codice simile per la stazione di destinazione
-                        ?>
-
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-                    <label for="depart-date">Data di partenza</label>
-                    <input type="date" id="depart-date" name="depart-date" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="return-date">Data di ritorno</label>
-                    <input type="date" id="return-date" name="return-date" required>
-                </div>
-
-                <button type="submit">Cerca treni</button>
-
-            </form>
-        
-    </body>
+</body>
 
 </html>

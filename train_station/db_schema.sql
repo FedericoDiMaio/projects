@@ -16,32 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `biglietto`
+-- Table structure for table `stazione`
 --
 
-DROP TABLE IF EXISTS `biglietto`;
+DROP TABLE IF EXISTS `stazione`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `biglietto` (
-  `id_biglietto` int(11) NOT NULL,
-  `id_utente` int(11) DEFAULT NULL,
-  `id_viaggio` int(11) DEFAULT NULL,
-  `prezzo` float DEFAULT NULL,
-  PRIMARY KEY (`id_biglietto`),
-  KEY `id_utente_idx` (`id_utente`),
-  KEY `id_viaggio_idx` (`id_viaggio`),
-  CONSTRAINT `id_utente` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id_utente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `id_viaggio` FOREIGN KEY (`id_viaggio`) REFERENCES `viaggio` (`id_viaggio`) ON DELETE NO ACTION ON UPDATE NO ACTION
+CREATE TABLE `stazione` (
+  `id_stazione` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_stazione` varchar(45) NOT NULL,
+  `posizone_km` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_stazione`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `biglietto`
+-- Dumping data for table `stazione`
 --
 
-LOCK TABLES `biglietto` WRITE;
-/*!40000 ALTER TABLE `biglietto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `biglietto` ENABLE KEYS */;
+LOCK TABLES `stazione` WRITE;
+/*!40000 ALTER TABLE `stazione` DISABLE KEYS */;
+INSERT INTO `stazione` VALUES (0,'','');
+/*!40000 ALTER TABLE `stazione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,7 +49,58 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-05 11:35:04
+-- Dump completed on 2023-11-09 11:46:11
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: train_station
+-- ------------------------------------------------------
+-- Server version	5.5.5-10.4.28-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `carrozza`
+--
+
+DROP TABLE IF EXISTS `carrozza`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `carrozza` (
+  `id_carrozza` int(11) NOT NULL,
+  `tipo_carrozza` varchar(45) NOT NULL,
+  `numero_posti` int(11) NOT NULL,
+  PRIMARY KEY (`id_carrozza`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `carrozza`
+--
+
+LOCK TABLES `carrozza` WRITE;
+/*!40000 ALTER TABLE `carrozza` DISABLE KEYS */;
+/*!40000 ALTER TABLE `carrozza` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-11-09 11:46:12
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: train_station
@@ -106,7 +153,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-05 11:35:05
+-- Dump completed on 2023-11-09 11:46:11
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: train_station
@@ -125,27 +172,32 @@ UNLOCK TABLES;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `carrozza`
+-- Table structure for table `biglietto`
 --
 
-DROP TABLE IF EXISTS `carrozza`;
+DROP TABLE IF EXISTS `biglietto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `carrozza` (
-  `id_carrozza` int(11) NOT NULL,
-  `tipo_carrozza` varchar(45) NOT NULL,
-  `numero_posti` int(11) NOT NULL,
-  PRIMARY KEY (`id_carrozza`)
+CREATE TABLE `biglietto` (
+  `id_biglietto` int(11) NOT NULL,
+  `id_utente` int(11) DEFAULT NULL,
+  `id_viaggio` int(11) DEFAULT NULL,
+  `prezzo` float DEFAULT NULL,
+  PRIMARY KEY (`id_biglietto`),
+  KEY `id_utente_idx` (`id_utente`),
+  KEY `id_viaggio_idx` (`id_viaggio`),
+  CONSTRAINT `id_utente` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id_utente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `id_viaggio` FOREIGN KEY (`id_viaggio`) REFERENCES `viaggio` (`id_viaggio`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `carrozza`
+-- Dumping data for table `biglietto`
 --
 
-LOCK TABLES `carrozza` WRITE;
-/*!40000 ALTER TABLE `carrozza` DISABLE KEYS */;
-/*!40000 ALTER TABLE `carrozza` ENABLE KEYS */;
+LOCK TABLES `biglietto` WRITE;
+/*!40000 ALTER TABLE `biglietto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `biglietto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -157,7 +209,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-05 11:35:05
+-- Dump completed on 2023-11-09 11:46:11
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: train_station
@@ -207,7 +259,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-05 11:35:07
+-- Dump completed on 2023-11-09 11:46:12
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: train_station
@@ -261,58 +313,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-05 11:35:06
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: train_station
--- ------------------------------------------------------
--- Server version	5.5.5-10.4.28-MariaDB
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `stazione`
---
-
-DROP TABLE IF EXISTS `stazione`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `stazione` (
-  `id_stazione` int(11) NOT NULL,
-  `nome_stazione` varchar(45) NOT NULL,
-  `posizone_km` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_stazione`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `stazione`
---
-
-LOCK TABLES `stazione` WRITE;
-/*!40000 ALTER TABLE `stazione` DISABLE KEYS */;
-/*!40000 ALTER TABLE `stazione` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2023-11-05 11:35:06
+-- Dump completed on 2023-11-09 11:46:10
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: train_station
@@ -368,7 +369,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-05 11:35:07
+-- Dump completed on 2023-11-09 11:46:11
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: train_station
@@ -418,7 +419,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-05 11:35:07
+-- Dump completed on 2023-11-09 11:46:12
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: train_station
@@ -437,29 +438,32 @@ UNLOCK TABLES;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `viaggio_tratta`
+-- Table structure for table `utente`
 --
 
-DROP TABLE IF EXISTS `viaggio_tratta`;
+DROP TABLE IF EXISTS `utente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `viaggio_tratta` (
-  `id_tratta` int(11) NOT NULL,
-  `id_viaggio` int(11) NOT NULL,
-  PRIMARY KEY (`id_tratta`,`id_viaggio`),
-  KEY `fk_viaggio` (`id_viaggio`),
-  CONSTRAINT `fk_tratta` FOREIGN KEY (`id_tratta`) REFERENCES `tratta` (`id_tratta`),
-  CONSTRAINT `fk_viaggio` FOREIGN KEY (`id_viaggio`) REFERENCES `viaggio` (`id_viaggio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `utente` (
+  `id_utente` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `cognome` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `ruolo` varchar(45) DEFAULT 'registrato',
+  PRIMARY KEY (`id_utente`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `viaggio_tratta`
+-- Dumping data for table `utente`
 --
 
-LOCK TABLES `viaggio_tratta` WRITE;
-/*!40000 ALTER TABLE `viaggio_tratta` DISABLE KEYS */;
-/*!40000 ALTER TABLE `viaggio_tratta` ENABLE KEYS */;
+LOCK TABLES `utente` WRITE;
+/*!40000 ALTER TABLE `utente` DISABLE KEYS */;
+INSERT INTO `utente` VALUES (1,'Federico','Di Maio','utente@utente.com','test','registrato'),(3,'Riccardo','Privitera','utente@amministrativo.com','test','amministrativo'),(4,'Stefano','Bielli','utente@esercizio.com','test','esercizio');
+/*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -471,60 +475,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-05 11:35:06
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: train_station
--- ------------------------------------------------------
--- Server version	5.5.5-10.4.28-MariaDB
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `viaggio_tratta`
---
-
-DROP TABLE IF EXISTS `viaggio_tratta`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `viaggio_tratta` (
-  `id_tratta` int(11) NOT NULL,
-  `id_viaggio` int(11) NOT NULL,
-  PRIMARY KEY (`id_tratta`,`id_viaggio`),
-  KEY `fk_viaggio` (`id_viaggio`),
-  CONSTRAINT `fk_tratta` FOREIGN KEY (`id_tratta`) REFERENCES `tratta` (`id_tratta`),
-  CONSTRAINT `fk_viaggio` FOREIGN KEY (`id_viaggio`) REFERENCES `viaggio` (`id_viaggio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `viaggio_tratta`
---
-
-LOCK TABLES `viaggio_tratta` WRITE;
-/*!40000 ALTER TABLE `viaggio_tratta` DISABLE KEYS */;
-/*!40000 ALTER TABLE `viaggio_tratta` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2023-11-05 11:35:06
+-- Dump completed on 2023-11-09 11:46:11
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: train_station
@@ -578,7 +529,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-05 11:35:05
+-- Dump completed on 2023-11-09 11:46:11
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: train_station
@@ -597,31 +548,29 @@ UNLOCK TABLES;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `utente`
+-- Table structure for table `viaggio_tratta`
 --
 
-DROP TABLE IF EXISTS `utente`;
+DROP TABLE IF EXISTS `viaggio_tratta`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `utente` (
-  `id_utente` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(45) NOT NULL,
-  `cognome` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL UNIQUE,
-  `password` varchar(255) NOT NULL,
-  `ruolo` varchar NOT NULL DEFAULT 'registrato',
-  PRIMARY KEY (`id_utente`),
-
+CREATE TABLE `viaggio_tratta` (
+  `id_tratta` int(11) NOT NULL,
+  `id_viaggio` int(11) NOT NULL,
+  PRIMARY KEY (`id_tratta`,`id_viaggio`),
+  KEY `fk_viaggio` (`id_viaggio`),
+  CONSTRAINT `fk_tratta` FOREIGN KEY (`id_tratta`) REFERENCES `tratta` (`id_tratta`),
+  CONSTRAINT `fk_viaggio` FOREIGN KEY (`id_viaggio`) REFERENCES `viaggio` (`id_viaggio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `utente`
+-- Dumping data for table `viaggio_tratta`
 --
 
-LOCK TABLES `utente` WRITE;
-/*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `utente` ENABLE KEYS */;
+LOCK TABLES `viaggio_tratta` WRITE;
+/*!40000 ALTER TABLE `viaggio_tratta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `viaggio_tratta` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -633,4 +582,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-05 11:35:04
+-- Dump completed on 2023-11-09 11:46:11
