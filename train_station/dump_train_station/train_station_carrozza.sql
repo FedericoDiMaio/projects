@@ -23,7 +23,8 @@ DROP TABLE IF EXISTS `carrozza`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `carrozza` (
-  `id_carrozza` int(11) NOT NULL,
+  `id_carrozza` int(11) NOT NULL AUTO_INCREMENT,
+  `serie_carrozza` varchar(45) NOT NULL,
   `tipo_carrozza` varchar(45) NOT NULL,
   `numero_posti` int(11) NOT NULL,
   PRIMARY KEY (`id_carrozza`)
