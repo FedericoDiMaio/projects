@@ -6,4 +6,4 @@ BUG:
 
 1- non trova Torre Spavento dopo averlo selezionato in tendina
 2- orario di arrivo per la ricerca dei treni non necessaria
-3- profilo esercizio menu a tendina si vede solo id-locomotiva/carrozza manca numero posti
+3- cercare treni per data

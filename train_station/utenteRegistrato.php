@@ -133,7 +133,7 @@
     </header>
 
 
-    <form method="POST">
+    <form action="./landingCheckRegistrato.php" method="POST">
         <div class="form-group">
             <label for="partenza">Stazione di partenza</label>
 
@@ -198,10 +198,10 @@
 
         <button type="submit">Cerca treni</button>
 
-        <nav>
-            <li><a href="./out.php">Logout</a></li>
-        </nav>
-    </form>
 
+    </form>
+        <nav>
+            <li><a href="./out.php"><button>Logout</button></a></li>
+        </nav>
 </body>
 </html>

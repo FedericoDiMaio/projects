@@ -45,7 +45,7 @@
 
         $dati_stazione_partenza = $stmt_stazione_partenza->fetch(PDO::FETCH_ASSOC);
 
-        
+        echo 'Stazione di partenza: ' . htmlspecialchars($dati_stazione_partenza['nome_stazione']) . '<br>';
     
     }
 
@@ -79,13 +79,14 @@
         $dati_stazione_destinazione = $stmt_stazione_destinazion->fetch(PDO::FETCH_ASSOC);
 
 
-        
+        echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['nome_stazione']) . '<br>';
 
         // Moltiplica la somma dei km per 0,25 cent di euro
         $costo_km = 0.25;
         $costo_biglietto = $somma_posizione_km_destinazione * $costo_km;
 
-
+        // Stampa il costo del biglietto 
+        echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
     }
 
     $dataPartenza = null;
@@ -119,9 +120,6 @@
         }
     }
 
-    echo 'Stazione di partenza: ' . htmlspecialchars($dati_stazione_partenza['nome_stazione']) . '<br>';
-    echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['nome_stazione']) . '<br>';
-    echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
     echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
     echo 'Data di ritorno: ' . ($dataRitorno ? htmlspecialchars($dataRitorno->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
     echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
@@ -208,7 +206,7 @@
     </form>
 
 
-    <form action="./loginNonEffettuato.html" method="POST">
+    <form action="./prenotazioneTreno.html" method="POST">
 
         <label for="treni">treni disponibili</label>
         

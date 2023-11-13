@@ -45,7 +45,7 @@
 
         $dati_stazione_partenza = $stmt_stazione_partenza->fetch(PDO::FETCH_ASSOC);
 
-        echo 'Stazione di partenza: ' . htmlspecialchars($dati_stazione_partenza['nome_stazione']) . '<br>';
+        
     
     }
 
@@ -79,14 +79,13 @@
         $dati_stazione_destinazione = $stmt_stazione_destinazion->fetch(PDO::FETCH_ASSOC);
 
 
-        echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['nome_stazione']) . '<br>';
+        
 
         // Moltiplica la somma dei km per 0,25 cent di euro
         $costo_km = 0.25;
         $costo_biglietto = $somma_posizione_km_destinazione * $costo_km;
 
-        // Stampa il costo del biglietto 
-        echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
+        
     }
 
     $dataPartenza = null;
@@ -119,11 +118,14 @@
             $orarioArrivo = new DateTime($_POST["orario-arrivo"]);
         }
     }
-
-    echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
-    echo 'Data di ritorno: ' . ($dataRitorno ? htmlspecialchars($dataRitorno->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
-    echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
-    echo 'Orario di arrivo: ' . ($orarioArrivo ? htmlspecialchars($orarioArrivo->format('H:i')) : 'Non ancora selezionato') . '<br>';
+    
+    //echo 'Stazione di partenza: ' . htmlspecialchars($dati_stazione_partenza['nome_stazione']) . '<br>';
+    //echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['nome_stazione']) . '<br>';
+    //echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
+    //echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
+    //echo 'Data di ritorno: ' . ($dataRitorno ? htmlspecialchars($dataRitorno->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
+    //echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
+    //echo 'Orario di arrivo: ' . ($orarioArrivo ? htmlspecialchars($orarioArrivo->format('H:i')) : 'Non ancora selezionato') . '<br>';
     
     
     ?>
@@ -206,35 +208,18 @@
     </form>
 
 
-    <form action="./loginCheck.php" method="POST">
+    <form action="./loginNonEffettuato.html" method="POST">
 
-        <label for="treni">treni disponibili</label>
         
-        <select name="treni">
-
-            <?php
-
-                $sql = "SELECT * FROM treno";
-                $result = $db->query($sql);
-
-                if ($result->rowCount() > 0) {
-                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                        echo '<option value="' . intval($row["id_treno"]) . '">' . htmlspecialchars($row["nome_treno"]) . '</option>';
-                    }
-                }
-
-            ?>
-
-        </select><br>
 
         <button type="submit">prenota treno</button>
 
     </form>
 
-    <nav>
-
-            <a href="./login.html">Login</a> <br>
-            <a href="./registrazione.html">Signup</a>
+        <nav>
+    
+            <a href="./login.html"><button>Login</button></a> <br>
+            <a href="./registrazione.html"><button>Signup</button></a>
 
         </nav>
 
