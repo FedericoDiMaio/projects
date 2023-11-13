@@ -28,7 +28,7 @@ CREATE TABLE `carrozza` (
   `tipo_carrozza` varchar(45) NOT NULL,
   `numero_posti` int(11) NOT NULL,
   PRIMARY KEY (`id_carrozza`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `carrozza` (
 
 LOCK TABLES `carrozza` WRITE;
 /*!40000 ALTER TABLE `carrozza` DISABLE KEYS */;
+INSERT INTO `carrozza` VALUES (1,'carrozza_1928','B1',36),(2,'carrozza_1928','B2',36),(3,'carrozza_1928','B3',36),(4,'carrozza_1930','C6',48),(5,'carrozza_1930','C9',48),(6,'carrozza_1952','C12',52),(7,'bagagliai_1910','CD1',12),(8,'bagagliai_1910','CD2',12),(9,'automotrici_nafta','AN 56.2',56),(10,'automotrici_nafta','AN 56.4',56);
 /*!40000 ALTER TABLE `carrozza` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-05 11:35:05
+-- Dump completed on 2023-11-12  9:44:43

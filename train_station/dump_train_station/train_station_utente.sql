@@ -26,12 +26,12 @@ CREATE TABLE `utente` (
   `id_utente` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
   `cognome` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL UNIQUE,
+  `email` varchar(45) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `ruolo` varchar NOT NULL DEFAULT 'registrato',
+  `ruolo` varchar(45) DEFAULT 'registrato',
   PRIMARY KEY (`id_utente`),
-
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
+INSERT INTO `utente` VALUES (1,'Federico','Di Maio','utente@utente.com','test','registrato'),(3,'Riccardo','Privitera','utente@amministrativo.com','test','amministrativo'),(4,'Stefano','Bielli','utente@esercizio.com','test','esercizio');
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-05 11:35:04
+-- Dump completed on 2023-11-12  9:44:43

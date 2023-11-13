@@ -4,6 +4,11 @@
         <title>TrainStation home page</title>
     </head>
 
+    <header>
+        <H1>TrainStation Home Page</H1>
+    </header>
+
+
 <body>
 
     <?php
@@ -125,12 +130,10 @@
 
 
 
-    <header>
-        <H1>TrainStation Home Page</H1>
 
-    </header>
 
-    <form method="POST">
+    <form action="./landingCheck.php" method="POST">
+        
         <div class="form-group">
             <label for="partenza">Stazione di partenza</label>
 
@@ -198,14 +201,42 @@
 
         <button type="submit">Cerca treni</button>
 
-        <nav>
+        
+
+    </form>
+
+
+    <form action="./loginCheck.php" method="POST">
+
+        <label for="treni">treni disponibili</label>
+        
+        <select name="treni">
+
+            <?php
+
+                $sql = "SELECT * FROM treno";
+                $result = $db->query($sql);
+
+                if ($result->rowCount() > 0) {
+                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<option value="' . intval($row["id_treno"]) . '">' . htmlspecialchars($row["nome_treno"]) . '</option>';
+                    }
+                }
+
+            ?>
+
+        </select><br>
+
+        <button type="submit">prenota treno</button>
+
+    </form>
+
+    <nav>
 
             <a href="./login.html">Login</a> <br>
             <a href="./registrazione.html">Signup</a>
 
         </nav>
-
-    </form>
 
 </body>
 

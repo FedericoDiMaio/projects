@@ -1,0 +1,1 @@
+portarsi tutte le $SESSION per cercare i treni disponibili
