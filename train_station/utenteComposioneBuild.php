@@ -21,36 +21,38 @@
     $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
     $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
 
-    $_SESSION['id_carrozza'] = isset($_POST['carrozza']) ? $_POST['carrozza'] : '';
-    $_SESSION['id_locomotiva'] = isset($_POST['locomotiva']) ? $_POST['locomotiva'] : '';
+    $_SESSION['id_carrozza'] = isset($_POST['carrozza']) ? $_POST['carrozza'] : 'array()';
+    $_SESSION['id_locomotiva'] = isset($_POST['locomotiva']) ? $_POST['locomotiva'] : 'array()';
     
-    
+    $id_carrozze = $_SESSION['id_carrozza'];
+    $id_locomotive = $_SESSION['id_locomotiva'];
 
-    $nome_carrozza = isset($_SESSION['id_carrozza']) ? $_SESSION['id_carrozza'] : '';
-    $nome_locomotiva = isset($_SESSION['id_locomotiva']) ? $_SESSION['id_locomotiva'] : '';
+    $nome_carrozza = isset($_SESSION['id_carrozza']) ? $_SESSION['id_carrozza'] : 'array()';
+    $nome_locomotiva = isset($_SESSION['id_locomotiva']) ? $_SESSION['id_locomotiva'] : 'array()';
+
     $dati_carrozza_originale = $nome_carrozza;
 
 
-    $sql_carrozza = "SELECT serie_carrozza FROM carrozza WHERE id_carrozza = :id_carrozza";
-    $stmt_carrozza = $db->prepare($sql_carrozza);
-    $stmt_carrozza->bindParam(':id_carrozza', $nome_carrozza, PDO::PARAM_STR);
-    $stmt_carrozza->execute();
-    $dati_carrozza = $stmt_carrozza->fetch(PDO::FETCH_ASSOC);
-    $nome_carrozza = $dati_carrozza['serie_carrozza'];
+    $sql_carrozze = "SELECT serie_carrozza, numero_posti FROM carrozza WHERE id_carrozza IN (" . implode(',', array_fill(0, count($id_carrozze), '?')) . ")";
+    $stmt_carrozze = $db->prepare($sql_carrozze);
+    $stmt_carrozze->execute($id_carrozze);
+    $dati_carrozze = $stmt_carrozze->fetchAll(PDO::FETCH_ASSOC);
 
-    $sql_locomotiva = "SELECT tipo_locomotiva FROM locomotiva WHERE id_locomotiva = :id_locomotiva";
-    $stmt_locomotiva = $db->prepare($sql_locomotiva);
-    $stmt_locomotiva->bindParam(':id_locomotiva', $nome_locomotiva, PDO::PARAM_STR);
-    $stmt_locomotiva->execute();
-    $dati_locomotiva = $stmt_locomotiva->fetch(PDO::FETCH_ASSOC);
-    $nome_locomotiva = $dati_locomotiva['tipo_locomotiva'];
-
-    $sql_posti_carrozza = "SELECT numero_posti FROM carrozza WHERE id_carrozza = :id_carrozza";
+    $numero_posti_totali = array_sum(array_column($dati_carrozze, 'numero_posti'));
+    $nome_carrozza = implode(', ', array_column($dati_carrozze, 'serie_carrozza'));
+    
+    $sql_locomotive = "SELECT tipo_locomotiva FROM locomotiva WHERE id_locomotiva IN (" . implode(',', array_fill(0, count($id_locomotive), '?')) . ")";
+    $stmt_locomotive = $db->prepare($sql_locomotive);
+    $stmt_locomotive->execute($id_locomotive);
+    $dati_locomotive = $stmt_locomotive->fetchAll(PDO::FETCH_ASSOC);
+    
+    $nome_locomotiva = implode(', ', array_column($dati_locomotive, 'tipo_locomotiva'));
+    
+    $sql_posti_carrozza = "SELECT numero_posti FROM carrozza WHERE id_carrozza IN (" . implode(',', array_fill(0, count($id_carrozze), '?')) . ")";
     $stmt_posti_carrozza = $db->prepare($sql_posti_carrozza);
-    $stmt_posti_carrozza->bindParam(':id_carrozza', $dati_carrozza_originale, PDO::PARAM_STR);
-    $stmt_posti_carrozza->execute();
-    $dati_posti_carrozza = $stmt_posti_carrozza->fetch(PDO::FETCH_ASSOC);
-    $numero_posti_carrozza = $dati_posti_carrozza['numero_posti'];
+    $stmt_posti_carrozza->execute($id_carrozze);
+    $dati_posti_carrozza = $stmt_posti_carrozza->fetchAll(PDO::FETCH_ASSOC);
+    $numero_posti_carrozza = implode(', ', array_column($dati_posti_carrozza, 'numero_posti'));
 
 
 
@@ -71,6 +73,7 @@
         echo 'nome_locomotiva: ' . htmlspecialchars($nome_locomotiva) . '<br>';
         echo 'nome_carrozza: ' . htmlspecialchars($nome_carrozza) . '<br>';
         echo 'numero_posti_carrozza: ' . htmlspecialchars($numero_posti_carrozza) . '<br>';
+        echo 'numero_posti_totali: ' . htmlspecialchars($numero_posti_totali) . '<br>';
         echo 'Data di partenza: ' . htmlspecialchars($_POST['data-partenza']) . '<br>';
         echo 'Data di ritorno: ' . htmlspecialchars($_POST['data-ritorno']) . '<br>';
         echo 'orario-partenza: ' . htmlspecialchars($_POST['orario-partenza']) . '<br>';
