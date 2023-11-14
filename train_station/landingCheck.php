@@ -123,10 +123,8 @@
             echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['nome_stazione']) . '<br>';
             echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
             echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
-            echo 'Data di ritorno: ' . ($dataRitorno ? htmlspecialchars($dataRitorno->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
             echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
-            echo 'Orario di arrivo: ' . ($orarioArrivo ? htmlspecialchars($orarioArrivo->format('H:i')) : 'Non ancora selezionato') . '<br>';
-    
+            
     
     ?>
 
@@ -185,20 +183,14 @@
             <input type="date" id="data-partenza" name="data-partenza" required>
         </div>
 
-        <div class="form-group">
-            <label for="data-ritorno">Data di ritorno</label>
-            <input type="date" id="data-ritorno" name="data-ritorno" required>
-        </div>
+
 
         <div class="form-group">
             <label for="orario-partenza">Orario di partenza</label>
             <input type="time" id="orario-partenza" name="orario-partenza" required>
         </div>
 
-        <div class="form-group">
-            <label for="orario-arrivo">Orario di arrivo</label>
-            <input type="time" id="orario-arrivo" name="orario-arrivo" required>
-        </div>
+
 
 
         <button type="submit">Cerca treni</button>
@@ -210,24 +202,34 @@
 
     <form action="./loginNonEffettuato.html" method="POST">
 
-        <label for="treni">treni disponibili</label>
-        
-        <select name="treni">
+    <label for="treni">Treni disponibili</label>
 
-            <?php
+    <select name="treni">
 
-                $sql = "SELECT * FROM treno";
-                $result = $db->query($sql);
+    <?php
 
-                if ($result->rowCount() > 0) {
-                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                        echo '<option value="' . intval($row["id_treno"]) . '">' . htmlspecialchars($row["nome_treno"]) . '</option>';
+                $dataPartenzaSelezionata = isset($_POST['data-partenza']) ? $_POST['data-partenza'] : null;
+
+                if ($dataPartenzaSelezionata) {
+                    // Modifica la query SQL per cercare il treno in base alla data di partenza
+                    $sql = "SELECT * FROM carrozza_treno WHERE data_inizio_servizio <= :dataPartenza AND data_fine_servizio >= :dataPartenza";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':dataPartenza', $dataPartenzaSelezionata);
+                    $stmt->execute();
+
+                    if ($stmt->rowCount() > 0) {
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo '<option value="' . intval($row["id_treno"]) . '">' . $row["id_treno"] . ' - ' . $row["data_inizio_servizio"] . ' a ' . $row["data_fine_servizio"] . '</option>';
+                        }
+                    } else {
+                        echo '<option value="-1">Nessun treno disponibile per la data di partenza selezionata</option>';
                     }
+                } else {
+                    echo '<option value="-1">Seleziona prima una data di partenza</option>';
                 }
+    ?>
 
-            ?>
-
-        </select><br>
+</select><br>
 
         <button type="submit">prenota treno</button>
 

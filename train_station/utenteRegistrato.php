@@ -88,9 +88,9 @@
     }
 
     $dataPartenza = null;
-    $dataRitorno = null;
+//    $dataRitorno = null;
     $orarioPartenza = null;
-    $orarioArrivo = null;
+//    $orarioArrivo = null;
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -118,10 +118,10 @@
         }
     }
 
-    echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
-    echo 'Data di ritorno: ' . ($dataRitorno ? htmlspecialchars($dataRitorno->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
-    echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
-    echo 'Orario di arrivo: ' . ($orarioArrivo ? htmlspecialchars($orarioArrivo->format('H:i')) : 'Non ancora selezionato') . '<br>';
+//   echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
+//    echo 'Data di ritorno: ' . ($dataRitorno ? htmlspecialchars($dataRitorno->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
+//    echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
+//    echo 'Orario di arrivo: ' . ($orarioArrivo ? htmlspecialchars($orarioArrivo->format('H:i')) : 'Non ancora selezionato') . '<br>';
     
     ?>
 
@@ -181,20 +181,14 @@
             <input type="date" id="data-partenza" name="data-partenza" required>
         </div>
 
-        <div class="form-group">
-            <label for="data-ritorno">Data di ritorno</label>
-            <input type="date" id="data-ritorno" name="data-ritorno" required>
-        </div>
+
 
         <div class="form-group">
             <label for="orario-partenza">Orario di partenza</label>
             <input type="time" id="orario-partenza" name="orario-partenza" required>
         </div>
 
-        <div class="form-group">
-            <label for="orario-arrivo">Orario di arrivo</label>
-            <input type="time" id="orario-arrivo" name="orario-arrivo" required>
-        </div>
+
 
         <button type="submit">Cerca treni</button>
 

@@ -31,15 +31,15 @@
 
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $locomotive = isset($_POST['locomotiva']) ? $_POST['locomotiva'] : array();
+                $locomotive_selezionate = isset($_POST['id_locomotiva']) ? $_POST['id_locomotiva'] : array();
         
-                if (empty($locomotive)) {
+                if (empty($locomotive_selezionate)) {
                     echo 'Seleziona almeno una locomotiva';
                     exit;
                 }
         
                 echo 'Locomotive selezionate: ';
-                foreach ($locomotive as $locomotiva) {
+                foreach ($locomotive_selezionate as $locomotiva) {
                     // Query per ottenere tutti i dati della locomotiva selezionata
                     $sql_locomotiva = "SELECT * FROM locomotiva WHERE id_locomotiva = :id";
                     $stmt_locomotiva_composizione = $db->prepare($sql_locomotiva);
@@ -48,23 +48,23 @@
         
                     $dati_locomotiva = $stmt_locomotiva_composizione->fetch(PDO::FETCH_ASSOC);
         
-                    echo htmlspecialchars($dati_locomotiva['tipo_locomotiva']) . ', ';
+                  //  echo htmlspecialchars($dati_locomotiva['tipo_locomotiva']) . ', ';
                 }
                 echo '<br>';
             }
 
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $carrozza = isset($_POST['carrozza']) ? intval($_POST['carrozza']) : null;
+                $carrozze_selezionate = isset($_POST['id_carrozza']) ? intval($_POST['id_carrozza']) : array();
 
-                if (empty($carrozza)) {
+                if (empty($carrozze_selezionate)) {
                     echo 'Seleziona almeno una carrozza';
                     exit;
                 }
 
                 // Query per ottenere tutti i dati della carrozza selezionata
                 echo 'Carrozze selezionate: ';
-                foreach ($carrozze as $carrozza) {
+                foreach ($carrozze_selezionate as $carrozza) {
                     // Query per ottenere tutti i dati della carrozza selezionata
                     $sql_carrozza = "SELECT * FROM carrozza WHERE id_carrozza = :id";
                     $stmt_carrozza_composizione = $db->prepare($sql_carrozza);
@@ -110,7 +110,7 @@
                 $result = $db->query($sql);
                 if ($result->rowCount() > 0) {
                     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                        echo '<label><input type="checkbox" name="locomotiva[]" value="' . intval($row["id_locomotiva"]) . '">' . htmlspecialchars($row["tipo_locomotiva"]) . '</label><br>';
+                        echo '<label><input type="checkbox" name="id_locomotiva[]" value="' . intval($row["id_locomotiva"]) . '">' . htmlspecialchars($row["tipo_locomotiva"]) . '</label><br>';
                     }
                 }
 
@@ -126,7 +126,7 @@
                 $result = $db->query($sql);
                 if ($result->rowCount() > 0) {
                     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                        echo '<label><input type="checkbox" name="carrozza[]" value="' . intval($row["id_carrozza"]) . '">' . htmlspecialchars($row["serie_carrozza"] . ' - ' . $row["tipo_carrozza"] . ' - ' . $row["numero_posti"]) . '</label><br>';
+                        echo '<label><input type="checkbox" name="id_carrozza[]" value="' . intval($row["id_carrozza"]) . '">' . htmlspecialchars($row["serie_carrozza"] . ' - ' . $row["tipo_carrozza"] . ' - ' . $row["numero_posti"]) . '</label><br>';
                     }
                 }
                 
@@ -154,44 +154,44 @@
 
     <form action="./utenteComposizioneCheckDelete.php" method="POST">
 
-    <label for="treni">Treni disponibili</label>
+        <label for="treni">Treni disponibili</label>
 
 
 
-    <select name="treni">
-        
-            <?php
+        <select name="treni">
+            
+                <?php
 
-                $sql = "SELECT ct.id_treno, ct.id_carrozza, ct.id_locomotiva, ct.numero_posti_totale, ct.data_inizio_servizio, ct.data_fine_servizio,
-                        c.serie_carrozza, c.tipo_carrozza, l.tipo_locomotiva
-                        FROM carrozza_treno ct
-                        JOIN carrozza c ON ct.id_carrozza = c.id_carrozza
-                        JOIN locomotiva l ON ct.id_locomotiva = l.id_locomotiva";
+                    $sql = "SELECT ct.id_treno, ct.id_carrozza, ct.id_locomotiva, ct.numero_posti_totale, ct.data_inizio_servizio, ct.data_fine_servizio,
+                            c.serie_carrozza, c.tipo_carrozza, l.tipo_locomotiva
+                            FROM carrozza_treno ct
+                            JOIN carrozza c ON ct.id_carrozza = c.id_carrozza
+                            JOIN locomotiva l ON ct.id_locomotiva = l.id_locomotiva";
 
-                $result = $db->query($sql);
+                    $result = $db->query($sql);
 
-                if ($result->rowCount() > 0) {
-                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                        echo '<option value="' . intval($row["id_treno"]) . '">'
-                            . 'ID TRENO =  ' . htmlspecialchars($row["id_treno"])
-                            . ', CARROZZA = ' . htmlspecialchars($row["serie_carrozza"])
-                            . ', TIPO CARROZZA = ' . htmlspecialchars($row["tipo_carrozza"])
-                            . ', LOCOMOTIVA =  ' . htmlspecialchars($row["tipo_locomotiva"])
-                            . ', POSTI TOTALI = ' . htmlspecialchars($row["numero_posti_totale"])
-                            . ', DATA INIZIO SERVIZIO = ' . htmlspecialchars($row["data_inizio_servizio"])
-                            . ', DATA FINE SERVIZIO = ' . htmlspecialchars($row["data_fine_servizio"])
-                            . '</option>';
+                    if ($result->rowCount() > 0) {
+                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                            echo '<option value="' . intval($row["id_treno"]) . '">'
+                                . 'ID TRENO =  ' . htmlspecialchars($row["id_treno"])
+                                . ', CARROZZA = ' . htmlspecialchars($row["serie_carrozza"])
+                                . ', TIPO CARROZZA = ' . htmlspecialchars($row["tipo_carrozza"])
+                                . ', LOCOMOTIVA =  ' . htmlspecialchars($row["tipo_locomotiva"])
+                                . ', POSTI TOTALI = ' . htmlspecialchars($row["numero_posti_totale"])
+                                . ', DATA INIZIO SERVIZIO = ' . htmlspecialchars($row["data_inizio_servizio"])
+                                . ', DATA FINE SERVIZIO = ' . htmlspecialchars($row["data_fine_servizio"])
+                                . '</option>';
+                        }
                     }
-                }
-                
-            ?>
+                    
+                ?>
 
-    </select><br>
-
+        </select><br>
 
 
 
-        <button type="submit">Cancella treno</button><br>
+
+            <button type="submit">Cancella treno</button><br>
 
     </form>
 

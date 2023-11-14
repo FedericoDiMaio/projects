@@ -24,8 +24,8 @@
     $id_carrozze = $_SESSION['id_carrozza'];
     $id_locomotive = $_SESSION['id_locomotiva'];
 
-    $_SESSION['id_carrozza'] = isset($_POST['carrozza']) ? $_POST['carrozza'] : 'array()';
-    $_SESSION['id_locomotiva'] = isset($_POST['locomotiva']) ? $_POST['locomotiva'] : 'array()';
+ //   $_SESSION['id_carrozza'] = isset($_POST['carrozza']) ? $_POST['carrozza'] : 'array()';
+ //   $_SESSION['id_locomotiva'] = isset($_POST['locomotiva']) ? $_POST['locomotiva'] : 'array()';
     
     $sql_carrozze = "SELECT id_carrozza, numero_posti FROM carrozza WHERE id_carrozza IN (" . implode(',', array_fill(0, count($id_carrozze), '?')) . ")";
     $stmt_carrozze = $db->prepare($sql_carrozze);

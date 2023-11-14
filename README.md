@@ -5,5 +5,5 @@ online train ticket purchase and sale service, preparatory project to access my 
 BUG:
 
 1- non trova Torre Spavento dopo averlo selezionato in tendina
-2- orario di arrivo per la ricerca dei treni non necessaria
+2- non salva gli id giusti all'interno della tabella carrozza_treno
 3- cercare treni per data

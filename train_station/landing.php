@@ -185,20 +185,14 @@
             <input type="date" id="data-partenza" name="data-partenza" required>
         </div>
 
-        <div class="form-group">
-            <label for="data-ritorno">Data di ritorno</label>
-            <input type="date" id="data-ritorno" name="data-ritorno" required>
-        </div>
+
 
         <div class="form-group">
             <label for="orario-partenza">Orario di partenza</label>
             <input type="time" id="orario-partenza" name="orario-partenza" required>
         </div>
 
-        <div class="form-group">
-            <label for="orario-arrivo">Orario di arrivo</label>
-            <input type="time" id="orario-arrivo" name="orario-arrivo" required>
-        </div>
+
 
 
         <button type="submit">Cerca treni</button>
