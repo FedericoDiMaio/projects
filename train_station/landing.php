@@ -32,12 +32,6 @@
             
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stazione_partenza = isset($_POST['partenza']) ? intval($_POST['partenza']) : null;
-        
-            if (empty($stazione_partenza)) {
-                echo 'Seleziona una stazione di partenza';
-                exit;
-            }
-            
 
             $sql_stazione_partenza = "SELECT * FROM stazione WHERE id_stazione = :id";
             $stmt_stazione_partenza = $db->prepare($sql_stazione_partenza);
@@ -54,60 +48,31 @@
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stazione_destinazione = isset($_POST['destinazione']) ? intval($_POST['destinazione']) : null;
 
-            if (empty($stazione_destinazione)) {
-                echo 'Seleziona una stazione di destinazione';
-                exit;
-            }
-
-            // Query per ottenere la posizione_km della stazione selezionata
-            $sql_posizione_km_destinazione = "SELECT posizone_km FROM stazione WHERE id_stazione = :id";
-            $stmt_posizione_km_destinazione = $db->prepare($sql_posizione_km_destinazione);
-            $stmt_posizione_km_destinazione->bindValue(':id', $stazione_destinazione, PDO::PARAM_INT);
-            $stmt_posizione_km_destinazione->execute();
-
-            $dati_posizione_km_destinazione = $stmt_posizione_km_destinazione->fetch(PDO::FETCH_ASSOC);
-
-            // Calcola la somma dei campi posizione_km delle due stazioni selezionate
-            $somma_posizione_km_destinazione = floatval($dati_posizione_km_destinazione['posizone_km']);
-
-
-            // Query per ottenere tutti i dati della stazione selezionata
             $sql_stazione_destinazione = "SELECT * FROM stazione WHERE id_stazione = :id";
             $stmt_stazione_destinazion = $db->prepare($sql_stazione_destinazione);
             $stmt_stazione_destinazion->bindValue(':id', $stazione_destinazione, PDO::PARAM_INT);
             $stmt_stazione_destinazion->execute();
 
-            $dati_stazione_destinazione = $stmt_stazione_destinazion->fetch(PDO::FETCH_ASSOC);
-
-            // Moltiplico la somma dei km per 0,25 cent di euro
-            $costo_km = 0.25;
-            $costo_biglietto = $somma_posizione_km_destinazione * $costo_km;
-
-            
         }
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (isset($_POST["data-partenza"])) {
-                $dataPartenza = new DateTime($_POST["data-partenza"]);
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST["data-partenza"])) {
+                    $dataPartenza = new DateTime($_POST["data-partenza"]);
+                }
             }
-        }
 
         
-        if($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (isset($_POST["orario-partenza"])) {
-                $orarioPartenza = new DateTime($_POST["orario-partenza"]);
+            if($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST["orario-partenza"])) {
+                    $orarioPartenza = new DateTime($_POST["orario-partenza"]);
+                }
             }
-        }
 
         
         
    
     
     ?>
-
-
-
-
 
     <form action="./landingCheck.php" method="POST">
         

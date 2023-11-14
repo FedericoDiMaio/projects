@@ -33,11 +33,10 @@
             $stazione_partenza = isset($_POST['partenza']) ? intval($_POST['partenza']) : null;
         
             if (empty($stazione_partenza)) {
-                echo 'Seleziona una stazione';
+                echo 'Seleziona una stazione di partenza';
                 exit;
             }
-            // Query per ottenere tutti i dati della stazione selezionata
-
+            
             $sql_stazione_partenza = "SELECT * FROM stazione WHERE id_stazione = :id";
             $stmt_stazione_partenza = $db->prepare($sql_stazione_partenza);
             $stmt_stazione_partenza->bindValue(':id', $stazione_partenza, PDO::PARAM_INT);
@@ -54,7 +53,7 @@
             $stazione_destinazione = isset($_POST['destinazione']) ? intval($_POST['destinazione']) : null;
 
             if (empty($stazione_destinazione)) {
-                echo 'Seleziona una stazione';
+                echo 'Seleziona una stazione di destinazione';
                 exit;
             }
 
@@ -124,7 +123,7 @@
             echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
             echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
             echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
-            
+            echo 'somma posizione km destinazione: ' . $somma_posizione_km_destinazione . '<br>';
     
     ?>
 
