@@ -80,40 +80,12 @@
 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-                    $dataPartenza = new DateTime($_POST["data-partenza"]);
-                    $dataRitorno = new DateTime($_POST["data-ritorno"]);
+                    $data_inizio_servizio = new DateTime($_POST["data_inizio_servizio"]);
+                    $data_fine_servizio = new DateTime($_POST["data_fine_servizio"]);
 
-                    //   $festivo = isFestivo($dataPartenza) || isFestivo($dataRitorno);
-                    //   $feriale = isFeriale($dataPartenza) && isFeriale($dataRitorno);
 
-                    //   if ($festivo || $feriale) {
-                    //       echo "Le date rispettano le condizioni specificate.";
-                    //   } else {
-                    //       echo "Le date non rispettano le condizioni specificate.";
-                    //   }
-                }
-                //  function isFestivo($data)
-                //  {
-                //      return true;
-                //  }
-                //  function isFeriale($data)
-                //  {
-                //      return true;
-                //  }
-                $sql_select = "SELECT nome_treno FROM treno";
-                $stmt_select = $db->prepare($sql_select);
-                $stmt_select->execute();
-                $risultati = $stmt_select->fetchAll(PDO::FETCH_ASSOC);
-
-                if ($risultati) {
-                    foreach ($risultati as $row) {
-                        echo '<option value="' . htmlspecialchars($row["nome_treno"]) . '">' . htmlspecialchars($row["nome_treno"]) . '</option>';
-                    }
-                } else {
-                    echo 'Nessun risultato';
                 }
 
-                echo 'treni disponibili: ' . htmlspecialchars($dati_treno['nome_treno']) . '<br>';
             }
 
         ?>
@@ -163,23 +135,13 @@
         </div>
 
         <div class="form-group">
-            <label for="data-partenza">Data di partenza</label>
-            <input type="date" id="data-partenza" name="data-partenza" required>
+            <label for="data_inizio_servizio">Data inizio servizio</label>
+            <input type="date" id="data_inizio_servizio" name="data_inizio_servizio" required>
         </div>
 
         <div class="form-group">
-            <label for="data-ritorno">Data di ritorno</label>
-            <input type="date" id="data-ritorno" name="data-ritorno" required>
-        </div>
-
-        <div class="form-group">
-            <label for="orario-partenza">Orario di partenza</label>
-            <input type="time" id="orario-partenza" name="orario-partenza" required>
-        </div>
-
-        <div class="form-group">
-            <label for="orario-arrivo">Orario di arrivo</label>
-            <input type="time" id="orario-arrivo" name="orario-arrivo" required>
+            <label for="data_fine_servizio">Data fine servizio</label>
+            <input type="date" id="data_fine_servizio" name="data_fine_servizio" required>
         </div>
 
         <button type="submit">Componi treno</button>
@@ -192,24 +154,42 @@
 
     <form action="./utenteComposizioneCheckDelete.php" method="POST">
 
-        <label for="treni">treni disponibili</label>
+    <label for="treni">Treni disponibili</label>
 
-        <select name="treni">
 
+
+    <select name="treni">
+        
             <?php
 
-            $sql = "SELECT * FROM treno";
-            $result = $db->query($sql);
+                $sql = "SELECT ct.id_treno, ct.id_carrozza, ct.id_locomotiva, ct.numero_posti_totale, ct.data_inizio_servizio, ct.data_fine_servizio,
+                        c.serie_carrozza, c.tipo_carrozza, l.tipo_locomotiva
+                        FROM carrozza_treno ct
+                        JOIN carrozza c ON ct.id_carrozza = c.id_carrozza
+                        JOIN locomotiva l ON ct.id_locomotiva = l.id_locomotiva";
 
-            if ($result->rowCount() > 0) {
-                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                    echo '<option value="' . intval($row["id_treno"]) . '">' . htmlspecialchars($row["nome_treno"]) . '</option>';
+                $result = $db->query($sql);
+
+                if ($result->rowCount() > 0) {
+                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<option value="' . intval($row["id_treno"]) . '">'
+                            . 'ID TRENO =  ' . htmlspecialchars($row["id_treno"])
+                            . ', CARROZZA = ' . htmlspecialchars($row["serie_carrozza"])
+                            . ', TIPO CARROZZA = ' . htmlspecialchars($row["tipo_carrozza"])
+                            . ', LOCOMOTIVA =  ' . htmlspecialchars($row["tipo_locomotiva"])
+                            . ', POSTI TOTALI = ' . htmlspecialchars($row["numero_posti_totale"])
+                            . ', DATA INIZIO SERVIZIO = ' . htmlspecialchars($row["data_inizio_servizio"])
+                            . ', DATA FINE SERVIZIO = ' . htmlspecialchars($row["data_fine_servizio"])
+                            . '</option>';
+                    }
                 }
-            }
-
+                
             ?>
 
-        </select><br>
+    </select><br>
+
+
+
 
         <button type="submit">Cancella treno</button><br>
 

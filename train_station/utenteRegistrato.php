@@ -140,7 +140,7 @@
             <select name="partenza">
 
                 <?php
-
+                
                 $sql = "SELECT * FROM stazione";
                 $result = $db->query($sql);
 

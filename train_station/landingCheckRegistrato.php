@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TrainStation home page</title>
+        <title>TrainStation profilo registrato</title>
     </head>
 
-    <header>
-        <H1>TrainStation Home Page</H1>
-    </header>
+
 
 
 <body>
@@ -26,7 +24,10 @@
         die();
     }
 
-    
+    session_start();
+    $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
+    $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
+
 
         
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -130,8 +131,12 @@
 
 
 
+    <header>
 
+        <h1>Benvenuto <?php echo $nome . ' ' . $cognome; ?></h1>
+        <h2>Profilo registrato</h2>
 
+    </header>
     <form action="./landingCheck.php" method="POST">
         
         <div class="form-group">
@@ -233,8 +238,8 @@
 
         <nav>
     
-            <a href="./login.html"><button>Login</button></a> <br>
-            <a href="./registrazione.html"><button>Signup</button></a>
+           
+            <a href="./out.php"><button>Logout</button></a>
 
         </nav>
 
