@@ -2,12 +2,10 @@
 <html>
 
 <head>
-    <title>TrainStation home page</title>
+    <title>TrainStation profilo registrato</title>
 </head>
 
-<header>
-    <H1>TrainStation Home Page</H1>
-</header>
+
 
 
 <body>
@@ -28,6 +26,9 @@
         }
 
         session_start();
+
+        $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
+        $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
 
 
 
@@ -95,21 +96,36 @@
         $tempo_di_arrivo->add(new DateInterval('PT' . (int)($tempo_di_percorrenza * 60) . 'M'));
 
 
-    //    echo 'Stazione di partenza: ' . htmlspecialchars($dati_stazione_partenza['nome_stazione']) . '<br>';
-    //    echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['nome_stazione']) . '<br>';
-    //    echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
-    //    echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
-        echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
-    //    echo 'somma posizione km destinazione: ' . $somma_posizione_km . '<br>';
-          echo 'tempo di percorrenza HH:MM = ' . $tempo_di_percorrenza_hhmm . '<br>';
-          echo 'Tempo di arrivo: ' . $tempo_di_arrivo->format('H:i') . '<br>';
+        echo 'Stazione di partenza: ' . htmlspecialchars($dati_stazione_partenza['id_stazione']) . '<br>';
+        echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['id_stazione']) . '<br>';
+        //     echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
+        //     echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
+        //     echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
+        //     echo 'somma posizione km destinazione: ' . $somma_posizione_km . '<br>';
+        //     echo 'tempo di percorrenza HH:MM = ' . $tempo_di_percorrenza_hhmm . '<br>';
+        //     echo 'Tempo di arrivo: ' . $tempo_di_arrivo->format('H:i') . '<br>';
+
+
+        $_SESSION['stazione_partenza'] = isset($dati_stazione_partenza['id_stazione']) ? htmlspecialchars($dati_stazione_partenza['id_stazione']) : '';
+        $_SESSION['stazione_destinazione'] = isset($dati_stazione_destinazione['id_stazione']) ? htmlspecialchars($dati_stazione_destinazione['id_stazione']) : '';
+        $_SESSION['costo_biglietto'] = isset($costo_biglietto) ? $costo_biglietto : '';
+        $_SESSION['data_partenza'] = isset($dataPartenza) ? $dataPartenza->format('d-m-Y') : '';
+        $_SESSION['orario_partenza'] = isset($orarioPartenza) ? $orarioPartenza->format('H:i') : '';
+        $_SESSION['somma_posizione_km'] = isset($somma_posizione_km) ? $somma_posizione_km : '';
+        $_SESSION['tempo_di_percorrenza_hhmm'] = isset($tempo_di_percorrenza_hhmm) ? $tempo_di_percorrenza_hhmm : '';
+        $_SESSION['tempo_di_arrivo'] = isset($tempo_di_arrivo) ? $tempo_di_arrivo->format('H:i') : '';
+
     ?>
 
 
 
+    <header>
 
+        <h1>Benvenuto <?php echo $nome . ' ' . $cognome; ?></h1>
+        <h2>Profilo registrato</h2>
 
-    <form action="./landingCheck.php" method="POST">
+    </header>
+    <form action="./utenteRegistratoCheck.php" method="POST">
 
         <div class="form-group">
             <label for="partenza">Stazione di partenza</label>
@@ -161,25 +177,13 @@
         </div>
 
 
-
         <div class="form-group">
             <label for="orario-partenza">Orario di partenza</label>
             <input type="time" id="orario-partenza" name="orario-partenza" required>
         </div>
 
-
-
-
-        <button type="submit">Cerca treni</button>
-
-
-
-    </form>
-
-
-    <form action="./loginNonEffettuato.html" method="POST">
-
         <label for="treni">Treni disponibili</label>
+
 
         <select name="treni">
 
@@ -188,7 +192,7 @@
                 $dataPartenzaSelezionata = isset($_POST['data-partenza']) ? $_POST['data-partenza'] : null;
 
                 if ($dataPartenzaSelezionata) {
-                    //cerco il treno in base alla data di partenza
+                    // Modifica la query SQL per cercare il treno in base alla data di partenza
                     $sql = "SELECT * FROM carrozza_treno WHERE data_inizio_servizio <= :dataPartenza AND data_fine_servizio >= :dataPartenza";
                     $stmt = $db->prepare($sql);
                     $stmt->bindParam(':dataPartenza', $dataPartenzaSelezionata);
@@ -208,14 +212,26 @@
 
         </select><br>
 
+
+        <button type="submit">Cerca treni</button>
+
+        
+                
+    
+
+    </form>
+
+
+    <form action="./checkTratta.php" method="POST">
+
         <button type="submit">prenota treno</button>
 
     </form>
 
     <nav>
 
-        <a href="./login.html"><button>Login</button></a> <br>
-        <a href="./registrazione.html"><button>Signup</button></a>
+
+        <a href="./out.php"><button>Logout</button></a>
 
     </nav>
 

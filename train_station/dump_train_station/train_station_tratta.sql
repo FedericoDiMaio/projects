@@ -24,9 +24,13 @@ DROP TABLE IF EXISTS `tratta`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tratta` (
   `id_tratta` int(11) NOT NULL AUTO_INCREMENT,
-  `distanza_km` int(11) NOT NULL,
+  `distanza_km` decimal(8,3) NOT NULL,
+  `costo_biglietto` decimal(8,3) NOT NULL,
   `id_stazione_partenza` int(11) NOT NULL,
   `id_stazione_arrivo` int(11) NOT NULL,
+  `data_partenza` dateTime NOT NULL,
+  `tempo_arrivo` dateTime NOT NULL,
+  `tempo_percorrenza` dateTime NOT NULL,
   PRIMARY KEY (`id_tratta`),
   KEY `id_stazione_partenza_fk` (`id_stazione_partenza`),
   KEY `id_stazione_arrivo_fk` (`id_stazione_arrivo`),

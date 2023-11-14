@@ -29,7 +29,7 @@
 
         session_start();
 
-
+        
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stazione_partenza = isset($_POST['partenza']) ? intval($_POST['partenza']) : null;
@@ -48,7 +48,11 @@
             $stmt_stazione_destinazion = $db->prepare($sql_stazione_destinazione);
             $stmt_stazione_destinazion->bindValue(':id', $stazione_destinazione, PDO::PARAM_INT);
             $stmt_stazione_destinazion->execute();
+
+
         }
+        
+        
 
 
 

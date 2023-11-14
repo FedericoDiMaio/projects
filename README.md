@@ -6,4 +6,5 @@ BUG:
 
 
 2- non salva gli id giusti all'interno della tabella carrozza_treno
+3- posso selezionare stazioni uguali
 
