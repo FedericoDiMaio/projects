@@ -71,8 +71,12 @@
 
             $somma_posizione_km = $dati_posizione_km_destinazione['posizione_km'] - $dati_posizione_km_partenza['posizione_km'];
 
+            $velocità_treno = 50;
+            $tempo_di_percorrenza = $somma_posizione_km / $velocità_treno;
+            
             $costo_km = 0.25;
             $costo_biglietto = $somma_posizione_km * $costo_km;
+            $tempo_di_percorrenza_hhmm = sprintf('%02d:%02d', (int) ($tempo_di_percorrenza * 60), ($tempo_di_percorrenza * 60) % 60);
         }
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -87,6 +91,8 @@
             }
         }
 
+        $tempo_di_arrivo = clone $orarioPartenza;
+        $tempo_di_arrivo->add(new DateInterval('PT' . (int)($tempo_di_percorrenza * 60) . 'M'));
 
 
     //    echo 'Stazione di partenza: ' . htmlspecialchars($dati_stazione_partenza['nome_stazione']) . '<br>';
@@ -95,7 +101,8 @@
     //    echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
     //    echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
     //    echo 'somma posizione km destinazione: ' . $somma_posizione_km . '<br>';
-
+          echo 'tempo di percorrenza HH:MM = ' . $tempo_di_percorrenza_hhmm . '<br>';
+          echo 'Tempo di arrivo: ' . $tempo_di_arrivo->format('H:i') . '<br>';
     ?>
 
 

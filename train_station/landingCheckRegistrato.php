@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>TrainStation profilo registrato</title>
-    </head>
+
+<head>
+    <title>TrainStation profilo registrato</title>
+</head>
 
 
 
@@ -30,7 +31,7 @@
     $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
 
 
-        
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stazione_partenza = isset($_POST['partenza']) ? intval($_POST['partenza']) : null;
 
@@ -87,7 +88,7 @@
         }
     }
 
-    
+
     ?>
 
 
@@ -99,7 +100,7 @@
 
     </header>
     <form action="./landingCheckRegistrato.php" method="POST">
-        
+
         <div class="form-group">
             <label for="partenza">Stazione di partenza</label>
 
@@ -160,51 +161,51 @@
 
         <button type="submit">Cerca treni</button>
 
-        
+
 
     </form>
 
 
     <form action="./prenotazioneTreno.html" method="POST">
 
-    <label for="treni">Treni disponibili</label>
+        <label for="treni">Treni disponibili</label>
 
-    <select name="treni">
+        <select name="treni">
 
             <?php
 
-                $dataPartenzaSelezionata = isset($_POST['data-partenza']) ? $_POST['data-partenza'] : null;
+            $dataPartenzaSelezionata = isset($_POST['data-partenza']) ? $_POST['data-partenza'] : null;
 
-                    if ($dataPartenzaSelezionata) {
-                            // Modifica la query SQL per cercare il treno in base alla data di partenza
-                        $sql = "SELECT * FROM carrozza_treno WHERE data_inizio_servizio <= :dataPartenza AND data_fine_servizio >= :dataPartenza";
-                        $stmt = $db->prepare($sql);
-                        $stmt->bindParam(':dataPartenza', $dataPartenzaSelezionata);
-                        $stmt->execute();
+            if ($dataPartenzaSelezionata) {
+                // Modifica la query SQL per cercare il treno in base alla data di partenza
+                $sql = "SELECT * FROM carrozza_treno WHERE data_inizio_servizio <= :dataPartenza AND data_fine_servizio >= :dataPartenza";
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':dataPartenza', $dataPartenzaSelezionata);
+                $stmt->execute();
 
-                            if ($stmt->rowCount() > 0) {
-                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                    echo '<option value="' . intval($row["id_treno"]) . '">' . $row["id_treno"] . ' - ' . $row["data_inizio_servizio"] . ' a ' . $row["data_fine_servizio"] . '</option>';
-                                }
-                            } else {
-                                echo '<option value="-1">Nessun treno disponibile per la data di partenza selezionata</option>';
-                            }
-                    } else {
-                            echo '<option value="-1">Seleziona prima una data di partenza</option>';
+                if ($stmt->rowCount() > 0) {
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<option value="' . intval($row["id_treno"]) . '">' . $row["id_treno"] . ' - ' . $row["data_inizio_servizio"] . ' a ' . $row["data_fine_servizio"] . '</option>';
                     }
+                } else {
+                    echo '<option value="-1">Nessun treno disponibile per la data di partenza selezionata</option>';
+                }
+            } else {
+                echo '<option value="-1">Seleziona prima una data di partenza</option>';
+            }
             ?>
 
-    </select><br>
+        </select><br>
         <button type="submit">prenota treno</button>
 
     </form>
 
-        <nav>
-    
-           
-            <a href="./out.php"><button>Logout</button></a>
+    <nav>
 
-        </nav>
+
+        <a href="./out.php"><button>Logout</button></a>
+
+    </nav>
 
 </body>
 
