@@ -59,7 +59,7 @@
             }
 
             // Query per ottenere la posizione_km della stazione selezionata
-            $sql_posizione_km_destinazione = "SELECT posizone_km FROM stazione WHERE id_stazione = :id";
+            $sql_posizione_km_destinazione = "SELECT posizione_km FROM stazione WHERE id_stazione = :id";
             $stmt_posizione_km_destinazione = $db->prepare($sql_posizione_km_destinazione);
             $stmt_posizione_km_destinazione->bindValue(':id', $stazione_destinazione, PDO::PARAM_INT);
             $stmt_posizione_km_destinazione->execute();
@@ -67,7 +67,7 @@
             $dati_posizione_km_destinazione = $stmt_posizione_km_destinazione->fetch(PDO::FETCH_ASSOC);
 
             // Calcola la somma dei campi posizione_km delle due stazioni selezionate
-            $somma_posizione_km_destinazione = floatval($dati_posizione_km_destinazione['posizone_km']);
+            $somma_posizione_km_destinazione = floatval($dati_posizione_km_destinazione['posizione_km']);
 
 
             // Query per ottenere tutti i dati della stazione selezionata
