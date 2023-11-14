@@ -36,7 +36,7 @@ CREATE TABLE `stazione` (
 
 LOCK TABLES `stazione` WRITE;
 /*!40000 ALTER TABLE `stazione` DISABLE KEYS */;
-INSERT INTO `stazione` VALUES (1,'Torre Spavento',' 0,000'),(2,'Prato Terra','2,700'),(3,'Rocca Pietrosa','7,580'),(4,'Villa Pietrosa','12,680'),(5,'Villa Santa Maria','16,900'),(6,'Pietra Santa Maria','23,950'),(7,'Castro Marino','31,500'),(8,'Porto Spigola','39,500'),(9,'Porto San Felice',' 46,000'),(10,'Villa San Felice','54,680');
+INSERT INTO `stazione` VALUES (1,'Torre Spavento',' 0.000'),(2,'Prato Terra','2.700'),(3,'Rocca Pietrosa','7.580'),(4,'Villa Pietrosa','12.680'),(5,'Villa Santa Maria','16.900'),(6,'Pietra Santa Maria','23.950'),(7,'Castro Marino','31.500'),(8,'Porto Spigola','39.500'),(9,'Porto San Felice',' 46.000'),(10,'Villa San Felice','54.680');
 /*!40000 ALTER TABLE `stazione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

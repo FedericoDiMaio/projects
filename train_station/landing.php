@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>TrainStation home page</title>
-    </head>
 
-    <header>
-        <H1>TrainStation Home Page</H1>
-    </header>
+<head>
+    <title>TrainStation home page</title>
+</head>
+
+<header>
+    <H1>TrainStation Home Page</H1>
+</header>
 
 
 <body>
@@ -27,9 +28,9 @@
         }
 
         session_start();
-        
 
-            
+
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stazione_partenza = isset($_POST['partenza']) ? intval($_POST['partenza']) : null;
 
@@ -37,11 +38,6 @@
             $stmt_stazione_partenza = $db->prepare($sql_stazione_partenza);
             $stmt_stazione_partenza->bindValue(':id', $stazione_partenza, PDO::PARAM_INT);
             $stmt_stazione_partenza->execute();
-
-            $dati_stazione_partenza = $stmt_stazione_partenza->fetch(PDO::FETCH_ASSOC);
-
-            
-        
         }
 
 
@@ -52,30 +48,31 @@
             $stmt_stazione_destinazion = $db->prepare($sql_stazione_destinazione);
             $stmt_stazione_destinazion->bindValue(':id', $stazione_destinazione, PDO::PARAM_INT);
             $stmt_stazione_destinazion->execute();
-
         }
 
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST["data-partenza"])) {
-                    $dataPartenza = new DateTime($_POST["data-partenza"]);
-                }
-            }
 
-        
-            if($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST["orario-partenza"])) {
-                    $orarioPartenza = new DateTime($_POST["orario-partenza"]);
-                }
-            }
 
-        
-        
-   
-    
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST["data-partenza"])) {
+                $dataPartenza = new DateTime($_POST["data-partenza"]);
+            }
+        }
+
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST["orario-partenza"])) {
+                $orarioPartenza = new DateTime($_POST["orario-partenza"]);
+            }
+        }
+
+
+
+
+
     ?>
 
     <form action="./landingCheck.php" method="POST">
-        
+
         <div class="form-group">
             <label for="partenza">Stazione di partenza</label>
 
@@ -134,7 +131,7 @@
 
         <button type="submit">Cerca treni</button>
 
-        
+
 
     </form>
 
@@ -144,14 +141,14 @@
         <button type="submit">prenota treno</button>
 
     </form>
-    
 
-        <nav>
-    
-            <a href="./login.html"><button>Login</button></a> <br>
-            <a href="./registrazione.html"><button>Signup</button></a>
 
-        </nav>
+    <nav>
+
+        <a href="./login.html"><button>Login</button></a> <br>
+        <a href="./registrazione.html"><button>Signup</button></a>
+
+    </nav>
 
 </body>
 
