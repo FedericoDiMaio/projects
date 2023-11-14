@@ -89,12 +89,12 @@
 
 
 
-        echo 'Stazione di partenza: ' . htmlspecialchars($dati_stazione_partenza['nome_stazione']) . '<br>';
-        echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['nome_stazione']) . '<br>';
-        echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
-        echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
-        echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
-        echo 'somma posizione km destinazione: ' . $somma_posizione_km . '<br>';
+    //    echo 'Stazione di partenza: ' . htmlspecialchars($dati_stazione_partenza['nome_stazione']) . '<br>';
+    //    echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['nome_stazione']) . '<br>';
+    //    echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
+    //    echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
+    //    echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
+    //    echo 'somma posizione km destinazione: ' . $somma_posizione_km . '<br>';
 
     ?>
 
