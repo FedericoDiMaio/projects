@@ -11,43 +11,57 @@
 <body>
 
     <?php
-
+    
     include "./connessionePDO.php";
     session_start();
 
     $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
     $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
 
+
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stazione_partenza = isset($_POST['partenza']) ? intval($_POST['partenza']) : null;
+
+        $sql_posizione_km_partenza = "SELECT posizione_km FROM stazione WHERE id_stazione = :id";
+        $stmt_posizione_km_partenza = $db->prepare($sql_posizione_km_partenza);
+        $stmt_posizione_km_partenza->bindValue(':id', $stazione_partenza, PDO::PARAM_INT);
+        $stmt_posizione_km_partenza->execute();
+
+        $dati_posizione_km_partenza = $stmt_posizione_km_partenza->fetch(PDO::FETCH_ASSOC);
+
+        $sql_stazione_partenza = "SELECT * FROM stazione WHERE id_stazione = :id";
+        $stmt_stazione_partenza = $db->prepare($sql_stazione_partenza);
+        $stmt_stazione_partenza->bindValue(':id', $stazione_partenza, PDO::PARAM_INT);
+        $stmt_stazione_partenza->execute();
+
+        $dati_stazione_partenza = $stmt_stazione_partenza->fetch(PDO::FETCH_ASSOC);
+
         $stazione_destinazione = isset($_POST['destinazione']) ? intval($_POST['destinazione']) : null;
 
+        $sql_posizione_km_destinazione = "SELECT posizione_km FROM stazione WHERE id_stazione = :id";
+        $stmt_posizione_km_destinazione = $db->prepare($sql_posizione_km_destinazione);
+        $stmt_posizione_km_destinazione->bindValue(':id', $stazione_destinazione, PDO::PARAM_INT);
+        $stmt_posizione_km_destinazione->execute();
 
-        $dati_posizione_km_partenza = fetchStazioneData($db, $stazione_partenza);
-        $dati_posizione_km_destinazione = fetchStazioneData($db, $stazione_destinazione);
+        $dati_posizione_km_destinazione = $stmt_posizione_km_destinazione->fetch(PDO::FETCH_ASSOC);
 
+        $sql_stazione_destinazione = "SELECT * FROM stazione WHERE id_stazione = :id";
+        $stmt_stazione_destinazione = $db->prepare($sql_stazione_destinazione);
+        $stmt_stazione_destinazione->bindValue(':id', $stazione_destinazione, PDO::PARAM_INT);
+        $stmt_stazione_destinazione->execute();
+
+        $dati_stazione_destinazione = $stmt_stazione_destinazione->fetch(PDO::FETCH_ASSOC);
 
         $somma_posizione_km = $dati_posizione_km_destinazione['posizione_km'] - $dati_posizione_km_partenza['posizione_km'];
+
         $velocita_treno = 50;
         $tempo_di_percorrenza = $somma_posizione_km / $velocita_treno;
-
 
         $costo_km = 0.25;
         $costo_biglietto = $somma_posizione_km * $costo_km;
 
-
         $tempo_di_percorrenza_hhmm = sprintf('%02d:%02d', (int)($tempo_di_percorrenza * 60), ($tempo_di_percorrenza * 60) % 60);
-    }
-
-
-    function fetchStazioneData($db, $stazione_id)
-    {
-        $sql_posizione_km = "SELECT posizione_km FROM stazione WHERE id_stazione = :id";
-        $stmt_posizione_km = $db->prepare($sql_posizione_km);
-        $stmt_posizione_km->bindValue(':id', $stazione_id, PDO::PARAM_INT);
-        $stmt_posizione_km->execute();
-
-        return $stmt_posizione_km->fetch(PDO::FETCH_ASSOC);
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -63,23 +77,27 @@
     $tempo_di_arrivo = clone $orarioPartenza;
     $tempo_di_arrivo->add(new DateInterval('PT' . (int)($tempo_di_percorrenza * 60) . 'M'));
 
-
+    $tempo_di_arrivo_formatted = $tempo_di_arrivo->format('H:i:s');
+    $orario_partenza_formatted = $orarioPartenza->format('H:i:s');
+    $data_partenza_formatted = $dataPartenza ? $dataPartenza->format('Y-m-d') : null;
+    //$tempo_di_percorrenza_formatted = $tempo_di_percorrenza_hhmm->format('H:i:s');
     //echo 'Stazione di partenza: ' . htmlspecialchars($dati_stazione_partenza['id_stazione']) . '<br>';
     //echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['id_stazione']) . '<br>';
     //     echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
     //     echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
     //     echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
     //     echo 'somma posizione km destinazione: ' . $somma_posizione_km . '<br>';
-    //     echo 'tempo di percorrenza HH:MM = ' . $tempo_di_percorrenza_hhmm . '<br>';
-    //     echo 'Tempo di arrivo: ' . $tempo_di_arrivo->format('H:i') . '<br>';
-
-
-    //       $_SESSION['stazione_partenza'] = isset($dati_stazione_partenza['id_stazione']) ? htmlspecialchars($dati_stazione_partenza['id_stazione']) : '';
-    //       $_SESSION['stazione_destinazione'] = isset($dati_stazione_destinazione['id_stazione']) ? htmlspecialchars($dati_stazione_destinazione['id_stazione']) : '';
-    //       $_SESSION['costo_biglietto'] = isset($costo_biglietto) ? $costo_biglietto : '';
+    echo 'tempo di percorrenza HH:MM = ' . $tempo_di_percorrenza_hhmm . '<br>';
+    echo 'Tempo di arrivo: ' . $tempo_di_arrivo->format('H:i') . '<br>';
+    echo 'data partenza: ' . $data_partenza_formatted . '<br>';
+    echo 'orario partenza: ' . $orario_partenza_formatted . '<br>';
+    //  echo 'tempo di arrivo' . $tempo_di_arrivo_formatted . '<br>';
+    //$_SESSION['stazione_partenza'] = isset($dati_stazione_partenza['id_stazione']) ? htmlspecialchars($dati_stazione_partenza['id_stazione']) : '';
+    //$_SESSION['stazione_destinazione'] = isset($dati_stazione_destinazione['id_stazione']) ? htmlspecialchars($dati_stazione_destinazione['id_stazione']) : '';
+    //$_SESSION['costo_biglietto'] = isset($costo_biglietto) ? $costo_biglietto : '';
     //        $_SESSION['data_partenza'] = isset($dataPartenza) ? $dataPartenza->format('d-m-Y') : '';
     //        $_SESSION['orario_partenza'] = isset($orarioPartenza) ? $orarioPartenza->format('H:i') : '';
-    //        $_SESSION['somma_posizione_km'] = isset($somma_posizione_km) ? $somma_posizione_km : '';
+    //$_SESSION['somma_posizione_km'] = isset($somma_posizione_km) ? $somma_posizione_km : '';
     //        $_SESSION['tempo_di_percorrenza_hhmm'] = isset($tempo_di_percorrenza_hhmm) ? $tempo_di_percorrenza_hhmm : '';
     //        $_SESSION['tempo_di_arrivo'] = isset($tempo_di_arrivo) ? $tempo_di_arrivo->format('H:i') : '';
 
