@@ -32,50 +32,49 @@
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $locomotive_selezionate = isset($_POST['id_locomotiva']) ? $_POST['id_locomotiva'] : array();
-        
+            
                 if (empty($locomotive_selezionate)) {
                     echo 'Seleziona almeno una locomotiva';
                     exit;
                 }
-        
+            
                 echo 'Locomotive selezionate: ';
                 foreach ($locomotive_selezionate as $locomotiva) {
-                    // Query per ottenere tutti i dati della locomotiva selezionata
+                    
                     $sql_locomotiva = "SELECT * FROM locomotiva WHERE id_locomotiva = :id";
                     $stmt_locomotiva_composizione = $db->prepare($sql_locomotiva);
                     $stmt_locomotiva_composizione->bindValue(':id', $locomotiva, PDO::PARAM_INT);
                     $stmt_locomotiva_composizione->execute();
-        
+            
                     $dati_locomotiva = $stmt_locomotiva_composizione->fetch(PDO::FETCH_ASSOC);
-        
-                  //  echo htmlspecialchars($dati_locomotiva['tipo_locomotiva']) . ', ';
+            
+                    
                 }
                 echo '<br>';
-            }
-
-
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            
                 $carrozze_selezionate = isset($_POST['id_carrozza']) ? intval($_POST['id_carrozza']) : array();
-
+            
                 if (empty($carrozze_selezionate)) {
                     echo 'Seleziona almeno una carrozza';
                     exit;
                 }
-
-                // Query per ottenere tutti i dati della carrozza selezionata
+            
+               
                 echo 'Carrozze selezionate: ';
                 foreach ($carrozze_selezionate as $carrozza) {
-                    // Query per ottenere tutti i dati della carrozza selezionata
+                    
                     $sql_carrozza = "SELECT * FROM carrozza WHERE id_carrozza = :id";
                     $stmt_carrozza_composizione = $db->prepare($sql_carrozza);
                     $stmt_carrozza_composizione->bindValue(':id', $carrozza, PDO::PARAM_INT);
                     $stmt_carrozza_composizione->execute();
-        
+            
                     $dati_carrozza = $stmt_carrozza_composizione->fetch(PDO::FETCH_ASSOC);
-        
+            
                     echo htmlspecialchars($dati_carrozza['serie_carrozza']) . ' ' . htmlspecialchars($dati_carrozza['tipo_carrozza']) . ' ' . htmlspecialchars($dati_carrozza['numero_posti']) . ', ';
                 }
                 echo '<br>';
+            
+            
 
 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
