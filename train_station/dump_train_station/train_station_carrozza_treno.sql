@@ -24,17 +24,12 @@ DROP TABLE IF EXISTS `carrozza_treno`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `carrozza_treno` (
   `id_treno` int(11) NOT NULL AUTO_INCREMENT,
-  `id_carrozza` int(11) NOT NULL,
-  `id_locomotiva` int(11) NOT NULL,
+  `id_carrozze` varchar(45) NOT NULL,
+  `id_locomotive` varchar(45) NOT NULL,
   `numero_posti_totale` int(11) NOT NULL,
   `data_inizio_servizio` dateTime NOT NULL,
   `data_fine_servizio` dateTime NOT NULL,
-  PRIMARY KEY (`id_treno`),
-  KEY `fk_carrozza` (`id_carrozza`),
-  KEY `fk_locomotiva` (`id_locomotiva`),
-  CONSTRAINT `fk_carrozza` FOREIGN KEY (`id_carrozza`) REFERENCES `carrozza` (`id_carrozza`),
-  
-  CONSTRAINT `fk_locomotiva` FOREIGN KEY (`id_locomotiva`) REFERENCES `locomotiva` (`id_locomotiva`)
+  PRIMARY KEY (`id_treno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

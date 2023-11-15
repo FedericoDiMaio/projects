@@ -27,11 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data_fine_servizio = $_POST['data_fine_servizio'];
 }
 
-echo 'data inizio servizio: ' . htmlspecialchars($data_inizio_servizio) . '<br>';
-echo 'data fine servizio: ' . htmlspecialchars($data_fine_servizio) . '<br>';
-echo 'numero posti totali: ' . htmlspecialchars($numero_posti_totale) . '<br>';
-echo 'id locomotiva: ' . htmlspecialchars(implode(', ', $id_locomotive)) . '<br>';
-echo 'id carrozza: ' . htmlspecialchars(implode(', ', $id_carrozze)) . '<br>';
+
+//echo 'data inizio servizio: ' . htmlspecialchars($data_inizio_servizio) . '<br>';
+//echo 'data fine servizio: ' . htmlspecialchars($data_fine_servizio) . '<br>';
+//echo 'numero posti totali: ' . htmlspecialchars($numero_posti_totale) . '<br>';
+echo 'id_locomotiva: ' . htmlspecialchars(implode(', ', $id_locomotive)) . '<br>';
+echo 'id_carrozza: ' . htmlspecialchars(implode(', ', $id_carrozze)) . '<br>';
 
 
 
@@ -56,3 +57,5 @@ try {
     echo 'Errore durante l\'inserimento nel database: ' . $e->getMessage();
     exit();
 }
+
+?>

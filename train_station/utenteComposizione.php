@@ -20,7 +20,7 @@
 
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $locomotive_selezionate = isset($_POST['id_locomotiva']) ? $_POST['id_locomotiva'] : array();
+        $locomotive_selezionate = isset($_POST['id_locomotiva']) ?(array) $_POST['id_locomotiva'] : array();
 
         if (empty($locomotive_selezionate)) {
             echo 'Seleziona almeno una locomotiva';
@@ -38,15 +38,16 @@
             $dati_locomotiva = $stmt_locomotiva_composizione->fetch(PDO::FETCH_ASSOC);
         }
         echo '<br>';
+        $carrozze_selezionate = isset($_POST['id_carrozza']) ? (array)$_POST['id_carrozza'] : array();
 
-        $carrozze_selezionate = isset($_POST['id_carrozza']) ? intval($_POST['id_carrozza']) : array();
+    //    $carrozze_selezionate = isset($_POST['id_carrozza']) ? intval($_POST['id_carrozza']) : array();
 
         if (empty($carrozze_selezionate)) {
             echo 'Seleziona almeno una carrozza';
             exit;
         }
 
-
+        $numero_posti_totale = 0;
         echo 'Carrozze selezionate: ';
         foreach ($carrozze_selezionate as $carrozza) {
 
@@ -56,21 +57,44 @@
             $stmt_carrozza_composizione->execute();
 
             $dati_carrozza = $stmt_carrozza_composizione->fetch(PDO::FETCH_ASSOC);
-
+            $numero_posti_totale += intval($dati_carrozza['numero_posti']);
             echo htmlspecialchars($dati_carrozza['serie_carrozza']) . ' ' . htmlspecialchars($dati_carrozza['tipo_carrozza']) . ' ' . htmlspecialchars($dati_carrozza['numero_posti']) . ', ';
         }
         echo '<br>';
 
 
+        $data_inizio_servizio = new DateTime($_POST["data_inizio_servizio"]);
+        $data_fine_servizio = new DateTime($_POST["data_fine_servizio"]);
+        $data_inizio_servizio_str = $data_inizio_servizio->format('Y-m-d');
+        $data_fine_servizio_str = $data_fine_servizio->format('Y-m-d');
+        
+        try {
 
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-            $data_inizio_servizio = new DateTime($_POST["data_inizio_servizio"]);
-            $data_fine_servizio = new DateTime($_POST["data_fine_servizio"]);
+            $query = $db->prepare("INSERT INTO composizione_treno (id_carrozze, id_locomotive, numero_posti_totale, data_inizio_servizio, data_fine_servizio) 
+                                       VALUES (:id_carrozze, :id_locomotive, :numero_posti_totale, :data_inizio_servizio, :data_fine_servizio)");
+            $id_carrozze = implode(',',$carrozze_selezionate);
+            $id_locomotive = implode(',',$locomotive_selezionate);
+            $query->bindParam(':id_carrozze',$id_carrozze,PDO::PARAM_STR);
+            $query->bindParam(':id_locomotive',$id_locomotive , PDO::PARAM_STR);
+            $query->bindParam(':numero_posti_totale', $numero_posti_totale, PDO::PARAM_INT);
+            $query->bindParam(':data_inizio_servizio', $data_inizio_servizio_str, PDO::PARAM_STR);
+            $query->bindParam(':data_fine_servizio', $data_fine_servizio_str, PDO::PARAM_STR);
+        
+            $query->execute();
+        
+            // Redirect alla pagina specificata dopo l'inserimento
+            header("location: ./utenteComposizioneEffettuata.html");
+            exit();
+        } catch (PDOException $e) {
+            echo 'Errore durante l\'inserimento nel database: ' . $e->getMessage();
+            exit();
         }
-    }
 
+
+    }
+    
+    
+  
     ?>
 
     <header>
@@ -81,7 +105,7 @@
     </header>
 
 
-    <form action="./utenteComposioneBuild.php" method="POST">
+    <form action="./utenteComposizione.php" method="POST">
 
 
         <div class="form-group">
@@ -143,19 +167,18 @@
 
         <select name="treni">
 
-            <?php
-
-            $sql = "SELECT ct.id_treno, ct.id_carrozza, ct.id_locomotiva, ct.numero_posti_totale, ct.data_inizio_servizio, ct.data_fine_servizio,
-                            c.serie_carrozza, c.tipo_carrozza, l.tipo_locomotiva
-                            FROM carrozza_treno ct
-                            JOIN carrozza c ON ct.id_carrozza = c.id_carrozza
-                            JOIN locomotiva l ON ct.id_locomotiva = l.id_locomotiva";
+        <?php
+            //todo: view treni disponibili
+            $sql = "SELECT ct.id_treno, ct.id_carrozze, ct.id_locomotive, ct.numero_posti_totale, ct.data_inizio_servizio, ct.data_fine_servizio
+                            FROM composizione_treno ct;";
+                           
+        
 
             $result = $db->query($sql);
 
             if ($result->rowCount() > 0) {
                 while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                    echo '<option value="' . intval($row["id_treno"]) . '">'
+                        echo '<option value="' . intval($row["id_treno"]) . '"> '
                         . 'ID TRENO =  ' . htmlspecialchars($row["id_treno"])
                         . ', CARROZZA = ' . htmlspecialchars($row["serie_carrozza"])
                         . ', TIPO CARROZZA = ' . htmlspecialchars($row["tipo_carrozza"])
@@ -167,7 +190,8 @@
                 }
             }
 
-            ?>
+            
+        ?>
 
         </select><br>
 
