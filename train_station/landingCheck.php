@@ -99,7 +99,7 @@
     //    echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['nome_stazione']) . '<br>';
     //    echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
     //    echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
-        echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
+          echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
     //    echo 'somma posizione km destinazione: ' . $somma_posizione_km . '<br>';
           echo 'tempo di percorrenza HH:MM = ' . $tempo_di_percorrenza_hhmm . '<br>';
           echo 'Tempo di arrivo: ' . $tempo_di_arrivo->format('H:i') . '<br>';
