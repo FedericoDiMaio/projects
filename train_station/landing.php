@@ -14,64 +14,56 @@
 
     <?php
 
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "train_station";
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "train_station";
 
-        try {
-            $db = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            print "ERRORE!: " . $e->getMessage() . "<br>";
-            die();
-        }
+    try {
+        $db = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        print "ERRORE!: " . $e->getMessage() . "<br>";
+        die();
+    }
 
-        session_start();
+    session_start();
 
+
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $stazione_partenza = isset($_POST['partenza']) ? intval($_POST['partenza']) : null;
+        $stazione_destinazione = isset($_POST['destinazione']) ? intval($_POST['destinazione']) : null;
+    
         
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $stazione_partenza = isset($_POST['partenza']) ? intval($_POST['partenza']) : null;
-
-            $sql_stazione_partenza = "SELECT * FROM stazione WHERE id_stazione = :id";
-            $stmt_stazione_partenza = $db->prepare($sql_stazione_partenza);
-            $stmt_stazione_partenza->bindValue(':id', $stazione_partenza, PDO::PARAM_INT);
-            $stmt_stazione_partenza->execute();
-        }
-
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $stazione_destinazione = isset($_POST['destinazione']) ? intval($_POST['destinazione']) : null;
-
-            $sql_stazione_destinazione = "SELECT * FROM stazione WHERE id_stazione = :id";
-            $stmt_stazione_destinazion = $db->prepare($sql_stazione_destinazione);
-            $stmt_stazione_destinazion->bindValue(':id', $stazione_destinazione, PDO::PARAM_INT);
-            $stmt_stazione_destinazion->execute();
-
-
-        }
+        $sql_stazioni = "SELECT * FROM stazione WHERE id_stazione IN (:id_partenza, :id_destinazione)";
+        $stmt_stazioni = $db->prepare($sql_stazioni);
+        $stmt_stazioni->bindValue(':id_partenza', $stazione_partenza, PDO::PARAM_INT);
+        $stmt_stazioni->bindValue(':id_destinazione', $stazione_destinazione, PDO::PARAM_INT);
+        $stmt_stazioni->execute();
+    
         
+        $risultati_stazioni = $stmt_stazioni->fetchAll(PDO::FETCH_ASSOC);
+    
         
+        foreach ($risultati_stazioni as $stazione) {
+            if ($stazione['id_stazione'] == $stazione_partenza) {
 
+            } elseif ($stazione['id_stazione'] == $stazione_destinazione) {
 
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (isset($_POST["data-partenza"])) {
-                $dataPartenza = new DateTime($_POST["data-partenza"]);
             }
         }
+    }
 
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (isset($_POST["orario-partenza"])) {
-                $orarioPartenza = new DateTime($_POST["orario-partenza"]);
-            }
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST["data-partenza"])) {
+            $dataPartenza = new DateTime($_POST["data-partenza"]);
         }
 
-
-
-
+        if (isset($_POST["orario-partenza"])) {
+            $orarioPartenza = new DateTime($_POST["orario-partenza"]);
+        }
+    }
 
     ?>
 
@@ -84,14 +76,14 @@
 
                 <?php
 
-                    $sql = "SELECT * FROM stazione";
-                    $result = $db->query($sql);
+                $sql = "SELECT * FROM stazione";
+                $result = $db->query($sql);
 
-                    if ($result->rowCount() > 0) {
-                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                            echo '<option value="' . intval($row["id_stazione"]) . '">' . htmlspecialchars($row["nome_stazione"]) . '</option>';
-                        }
+                if ($result->rowCount() > 0) {
+                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<option value="' . intval($row["id_stazione"]) . '">' . htmlspecialchars($row["nome_stazione"]) . '</option>';
                     }
+                }
 
                 ?>
 
@@ -106,13 +98,13 @@
 
                 <?php
 
-                    $result = $db->query($sql);
+                $result = $db->query($sql);
 
-                    if ($result->rowCount() > 0) {
-                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                            echo '<option value="' . intval($row["id_stazione"]) . '">' . htmlspecialchars($row["nome_stazione"]) . '</option>';
-                        }
+                if ($result->rowCount() > 0) {
+                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<option value="' . intval($row["id_stazione"]) . '">' . htmlspecialchars($row["nome_stazione"]) . '</option>';
                     }
+                }
 
                 ?>
 
