@@ -28,16 +28,16 @@ CREATE TABLE `tratta` (
   `costo_biglietto` decimal(8,3) NOT NULL,
   `id_stazione_partenza` int(11) NOT NULL,
   `id_stazione_arrivo` int(11) NOT NULL,
-  `orario_partenza` Datetime NOT NULL,
-  `data_partenza` Datetime NOT NULL,
-  `tempo_arrivo` Datetime NOT NULL,
-  `tempo_percorrenza` Datetime NOT NULL,
+  `orario_partenza` datetime NOT NULL,
+  `data_partenza` datetime NOT NULL,
+  `tempo_arrivo` datetime NOT NULL,
+  `tempo_percorrenza` datetime NOT NULL,
   PRIMARY KEY (`id_tratta`),
   KEY `id_stazione_partenza_fk` (`id_stazione_partenza`),
   KEY `id_stazione_arrivo_fk` (`id_stazione_arrivo`),
   CONSTRAINT `id_stazione_arrivo_fk` FOREIGN KEY (`id_stazione_arrivo`) REFERENCES `stazione` (`id_stazione`),
   CONSTRAINT `id_stazione_partenza_fk` FOREIGN KEY (`id_stazione_partenza`) REFERENCES `stazione` (`id_stazione`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,6 +46,7 @@ CREATE TABLE `tratta` (
 
 LOCK TABLES `tratta` WRITE;
 /*!40000 ALTER TABLE `tratta` DISABLE KEYS */;
+INSERT INTO `tratta` VALUES (1,36.800,9.200,2,8,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00'),(2,36.800,9.200,2,8,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00'),(3,36.800,9.200,2,8,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00'),(4,36.800,9.200,2,8,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00'),(5,36.800,9.200,2,8,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00'),(6,36.800,9.200,2,8,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `tratta` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-12  9:44:42
+-- Dump completed on 2023-11-16  8:33:00

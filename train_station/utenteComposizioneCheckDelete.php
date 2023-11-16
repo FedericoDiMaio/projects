@@ -8,17 +8,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_treno = $_POST['treni'];
 
         try {
-            // Elimina i record dalla tabella `carrozza_treno`
-            $delete_carrozza_treno = $db->prepare("DELETE FROM carrozza_treno WHERE id_treno = :id_treno");
+            
+            $delete_carrozza_treno = $db->prepare("DELETE FROM composizione_treno WHERE id_treno = :id_treno");
             $delete_carrozza_treno->bindParam(':id_treno', $id_treno, PDO::PARAM_INT);
             $delete_carrozza_treno->execute();
 
-            // Elimina il treno dalla tabella `treno`
+            
             $delete_treno = $db->prepare("DELETE FROM treno WHERE id_treno = :id_treno");
             $delete_treno->bindParam(':id_treno', $id_treno, PDO::PARAM_INT);
             $delete_treno->execute();
 
-            // Reindirizza a una pagina HTML
+            
             header("Location: ./utenteComposizioneDelete.html");
             exit();
         } catch (PDOException $e) {

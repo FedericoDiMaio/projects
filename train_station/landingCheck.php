@@ -171,7 +171,7 @@
 
             if ($dataPartenzaSelezionata) {
                 //cerco il treno in base alla data di partenza
-                $sql = "SELECT * FROM carrozza_treno WHERE data_inizio_servizio <= :dataPartenza AND data_fine_servizio >= :dataPartenza";
+                $sql = "SELECT * FROM composizione_treno WHERE data_inizio_servizio <= :dataPartenza AND data_fine_servizio >= :dataPartenza";
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(':dataPartenza', $dataPartenzaSelezionata);
                 $stmt->execute();
