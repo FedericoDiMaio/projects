@@ -180,9 +180,6 @@
                 while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                         echo '<option value="' . intval($row["id_treno"]) . '"> '
                         . 'ID TRENO =  ' . htmlspecialchars($row["id_treno"])
-                        . ', CARROZZA = ' . htmlspecialchars($row["serie_carrozza"])
-                        . ', TIPO CARROZZA = ' . htmlspecialchars($row["tipo_carrozza"])
-                        . ', LOCOMOTIVA =  ' . htmlspecialchars($row["tipo_locomotiva"])
                         . ', POSTI TOTALI = ' . htmlspecialchars($row["numero_posti_totale"])
                         . ', DATA INIZIO SERVIZIO = ' . htmlspecialchars($row["data_inizio_servizio"])
                         . ', DATA FINE SERVIZIO = ' . htmlspecialchars($row["data_fine_servizio"])

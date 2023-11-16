@@ -16,13 +16,16 @@
 
     include "./connessionePDO.php";
     session_start();
-
+    
 
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stazione_partenza = isset($_POST['partenza']) ? intval($_POST['partenza']) : null;
         $stazione_destinazione = isset($_POST['destinazione']) ? intval($_POST['destinazione']) : null;
-    
+
+               
+
+
         
         $sql_stazioni = "SELECT * FROM stazione WHERE id_stazione IN (:id_partenza, :id_destinazione)";
         $stmt_stazioni = $db->prepare($sql_stazioni);
@@ -41,6 +44,7 @@
 
             }
         }
+
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -56,6 +60,7 @@
     ?>
 
     <form action="./landingCheck.php" method="POST">
+     
 
         <div class="form-group">
             <label for="partenza">Stazione di partenza</label>
@@ -63,7 +68,7 @@
             <select name="partenza">
 
                 <?php
-
+         
                 $sql = "SELECT * FROM stazione";
                 $result = $db->query($sql);
 
@@ -93,7 +98,7 @@
                         echo '<option value="' . intval($row["id_stazione"]) . '">' . htmlspecialchars($row["nome_stazione"]) . '</option>';
                     }
                 }
-
+            
                 ?>
 
 
@@ -113,8 +118,13 @@
             <input type="time" id="orario-partenza" name="orario-partenza" required>
         </div>
 
-        <button type="submit">Cerca treni</button>
+        
 
+            <button type="submit">Cerca treni</button>
+        
+    
+
+        
 
 
     </form>

@@ -22,7 +22,12 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stazione_partenza = isset($_POST['partenza']) ? intval($_POST['partenza']) : null;
+        $stazione_destinazione = isset($_POST['destinazione']) ? intval($_POST['destinazione']) : null;
 
+        if ($stazione_partenza !== null && $stazione_destinazione !== null && $stazione_partenza === $stazione_destinazione) {
+            header('Location: ./landing.php');
+            exit;
+        }
         $sql_posizione_km_partenza = "SELECT posizione_km FROM stazione WHERE id_stazione = :id";
         $stmt_posizione_km_partenza = $db->prepare($sql_posizione_km_partenza);
         $stmt_posizione_km_partenza->bindValue(':id', $stazione_partenza, PDO::PARAM_INT);
@@ -37,7 +42,7 @@
 
         $dati_stazione_partenza = $stmt_stazione_partenza->fetch(PDO::FETCH_ASSOC);
 
-        $stazione_destinazione = isset($_POST['destinazione']) ? intval($_POST['destinazione']) : null;
+        
 
         $sql_posizione_km_destinazione = "SELECT posizione_km FROM stazione WHERE id_stazione = :id";
         $stmt_posizione_km_destinazione = $db->prepare($sql_posizione_km_destinazione);
@@ -81,10 +86,10 @@
     //    echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['nome_stazione']) . '<br>';
     //    echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
     //    echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
-    echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
+    //echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
     //    echo 'somma posizione km destinazione: ' . $somma_posizione_km . '<br>';
-    echo 'tempo di percorrenza HH:MM = ' . $tempo_di_percorrenza_hhmm . '<br>';
-    echo 'Tempo di arrivo: ' . $tempo_di_arrivo->format('H:i') . '<br>';
+    //echo 'tempo di percorrenza HH:MM = ' . $tempo_di_percorrenza_hhmm . '<br>';
+    //echo 'Tempo di arrivo: ' . $tempo_di_arrivo->format('H:i') . '<br>';
     ?>
 
 
@@ -170,7 +175,7 @@
             $dataPartenzaSelezionata = isset($_POST['data-partenza']) ? $_POST['data-partenza'] : null;
 
             if ($dataPartenzaSelezionata) {
-                //cerco il treno in base alla data di partenza
+                
                 $sql = "SELECT * FROM composizione_treno WHERE data_inizio_servizio <= :dataPartenza AND data_fine_servizio >= :dataPartenza";
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(':dataPartenza', $dataPartenzaSelezionata);
