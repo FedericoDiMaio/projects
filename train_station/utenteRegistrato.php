@@ -30,7 +30,7 @@
         $stmt_stazione_destinazion->execute();
     }
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
         if (isset($_POST["data-partenza"])) {
             $dataPartenza = new DateTime($_POST["data-partenza"]);
         }
@@ -38,7 +38,7 @@
         if (isset($_POST["orario-partenza"])) {
             $orarioPartenza = new DateTime($_POST["orario-partenza"]);
         }
-    }
+    
 
 
     //   echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
