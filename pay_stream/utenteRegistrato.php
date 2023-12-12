@@ -16,6 +16,8 @@
         $userID = isset($_SESSION['UserID']) ? $_SESSION['UserID'] : '';
         $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
         $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
+        $carte_di_credito = isset($_SESSION['carte_di_credito']) ? $_SESSION['carte_di_credito'] : '';
+        $numeroCarta = isset($_SESSION['NumeroCarta']) ? $_SESSION['NumeroCarta'] : '';
         
     ?>
 
@@ -62,7 +64,11 @@
                 $risultati_carte_di_credito = $stmt_carte_di_credito->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($risultati_carte_di_credito as $carte_di_credito) {
                     echo '<option value="' . htmlspecialchars($carte_di_credito['CartaID']) . '">' . 'Numero carta: ' . htmlspecialchars($carte_di_credito['NumeroCarta']) . '</option>';
-                }
+
+                echo $_SESSION['NumeroCarta'];
+                
+            }
+                
             ?>
             
             </select>
@@ -70,28 +76,26 @@
     </form><br>
 
 
-        <form action="./inserisciDenaroCheck.php" method="POST">
+    <form action="./inserisciDenaroCheck.php" method="POST">
             
-
-            
-            <div class="form-group">
-                <label for="inserisci_denaro">Inserisci Denaro:</label>
-                <input type="number" name="inserisci_denaro" placeholder="Importo da inserire" required>
-                <button type="submit">Inserisci Denaro</button>
-            </div>
+        <div class="form-group">
+            <label for="inserisci_denaro">Inserisci Denaro:</label>
+            <input type="text" name="inserisci_denaro" placeholder="esempio 10.00" required>
+            <button type="submit">Inserisci Denaro</button>
+        </div>
 
             <?php
             
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                unset($_SESSION['importoDaInserire']);
-            
-                if (isset($_POST['inserisci_denaro'])) {
-                    $_SESSION['importoDaInserire'] = $_POST['inserisci_denaro'];
-                    
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    unset($_SESSION['importoDaInserire']);
+                
+                    if (isset($_POST['inserisci_denaro'])) {
+                        $_SESSION['importoDaInserire'] = $_POST['inserisci_denaro'];
+                        
+                    }
                 }
-            }
-        ?>
-        </form>
+            ?>
+    </form>
     
     <nav>
         <li><a href="./out.php"><button>Logout</button></a></li>
