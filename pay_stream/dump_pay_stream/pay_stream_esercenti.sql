@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `esercenti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `esercenti` (
-  `EsercenteID` int(11) NOT NULL,
+  `EsercenteID` int(11) NOT NULL AUTO_INCREMENT,
   `UserID` int(11) DEFAULT NULL,
   `ContoID` int(11) DEFAULT NULL,
   PRIMARY KEY (`EsercenteID`),
@@ -31,7 +31,7 @@ CREATE TABLE `esercenti` (
   KEY `ContoID` (`ContoID`),
   CONSTRAINT `esercenti_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `utenti_registrati` (`UserID`),
   CONSTRAINT `esercenti_ibfk_2` FOREIGN KEY (`ContoID`) REFERENCES `conto_corrente` (`ContoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `esercenti` (
 
 LOCK TABLES `esercenti` WRITE;
 /*!40000 ALTER TABLE `esercenti` DISABLE KEYS */;
+INSERT INTO `esercenti` VALUES (1,1,1);
 /*!40000 ALTER TABLE `esercenti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-17 14:48:39
+-- Dump completed on 2023-12-12 16:11:23

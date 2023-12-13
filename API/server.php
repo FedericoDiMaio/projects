@@ -23,7 +23,7 @@ if (isset($_POST['url_inviante'], $_POST['url_risposta'], $_POST['id_esercente']
 
     try {
 
-    // Aggiorna il saldo nella tabella conto_corrente
+    // Aggiorna il saldo nella tabella conto_corrente esercente
     $queryUpdateSaldo = "UPDATE conto_corrente SET Saldo = Saldo + :prezzoTransazione WHERE UserID = :idEsercente";
     $stmtUpdateSaldo = $db->prepare($queryUpdateSaldo);
     $stmtUpdateSaldo->bindParam(':prezzoTransazione', $prezzoTransazione, PDO::PARAM_STR);

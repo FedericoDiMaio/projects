@@ -41,6 +41,7 @@ CREATE TABLE `transazioni_m2m` (
 
 LOCK TABLES `transazioni_m2m` WRITE;
 /*!40000 ALTER TABLE `transazioni_m2m` DISABLE KEYS */;
+INSERT INTO `transazioni_m2m` VALUES (1,'https://localhost/progetti_bdc/projects/pay_stream/client.php','https://localhost/progetti_bdc/projects/pay_stream/server.php',1,'caricamento denaro',34.00),(2,'http://localhost/progetti_bdc/projects/API/server.php','http://localhost/progetti_bdc/projects/API/server.php',1,'fe',123.90),(3,'http://localhost/progetti_bdc/projects/API/server.php','http://localhost/progetti_bdc/projects/API/server.php',1,'fe',123.90);
 /*!40000 ALTER TABLE `transazioni_m2m` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-17 14:48:40
+-- Dump completed on 2023-12-12 16:11:22

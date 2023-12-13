@@ -11,9 +11,9 @@
 <body>
 
     <?php
-    
-    include "./connessionePDO.php";
     session_start();
+    include "./connessionePDO.php";
+    
 
     $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
     $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
@@ -81,50 +81,17 @@
     $orario_partenza_formatted = $orarioPartenza->format('H:i:s');
     $data_partenza_formatted = $dataPartenza ? $dataPartenza->format('Y-m-d') : null;
 
-        //$tempo_di_percorrenza_formatted = $tempo_di_percorrenza_hhmm->format('H:i:s');
-        echo 'Stazione di partenza: ' . htmlspecialchars($dati_stazione_partenza['id_stazione']) . '<br>';
-        echo 'Stazione di destinazione: ' . htmlspecialchars($dati_stazione_destinazione['id_stazione']) . '<br>';
-        echo 'Costo del biglietto: ' . $costo_biglietto . ' euro' . '<br>';
-        echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
-        echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
-        echo 'somma posizione km destinazione: ' . $somma_posizione_km . '<br>';
-        echo 'tempo di percorrenza HH:MM = ' . $tempo_di_percorrenza_hhmm . '<br>';
-        echo 'Tempo di arrivo: ' . $tempo_di_arrivo->format('H:i') . '<br>';
-        echo 'data partenza: ' . $data_partenza_formatted . '<br>';
-        echo 'orario partenza: ' . $orario_partenza_formatted . '<br>';
-        //echo 'tempo di arrivo' . $tempo_di_arrivo_formatted . '<br>';
-        //$_SESSION['stazione_partenza'] = isset($dati_stazione_partenza['id_stazione']) ? htmlspecialchars($dati_stazione_partenza['id_stazione']) : '';
-        //$_SESSION['stazione_destinazione'] = isset($dati_stazione_destinazione['id_stazione']) ? htmlspecialchars($dati_stazione_destinazione['id_stazione']) : '';
-        //$_SESSION['costo_biglietto'] = isset($costo_biglietto) ? $costo_biglietto : '';
-        //        $_SESSION['data_partenza'] = isset($dataPartenza) ? $dataPartenza->format('d-m-Y') : '';
-        //        $_SESSION['orario_partenza'] = isset($orarioPartenza) ? $orarioPartenza->format('H:i') : '';
-        //$_SESSION['somma_posizione_km'] = isset($somma_posizione_km) ? $somma_posizione_km : '';
-        //        $_SESSION['tempo_di_percorrenza_hhmm'] = isset($tempo_di_percorrenza_hhmm) ? $tempo_di_percorrenza_hhmm : '';
-  /*      //        $_SESSION['tempo_di_arrivo'] = isset($tempo_di_arrivo) ? $tempo_di_arrivo->format('H:i') : '';
-    $stmt = $db->prepare("INSERT INTO tratta (distanza_km, costo_biglietto, id_stazione_partenza, id_stazione_arrivo, data_partenza, orario_partenza, tempo_arrivo, tempo_percorrenza) VALUES (:distanza_km, :costo_biglietto, :id_stazione_partenza, :id_stazione_arrivo, :data_partenza, :orario_partenza, :tempo_arrivo, :tempo_percorrenza)");
+    $_SESSION['stazione_partenza'] = htmlspecialchars($dati_stazione_partenza['id_stazione']);
+    $_SESSION['stazione_destinazione'] = htmlspecialchars($dati_stazione_destinazione['id_stazione']);
+    $_SESSION['costo_biglietto'] = $costo_biglietto;
+    $_SESSION['data_partenza'] = $dataPartenza ? $dataPartenza->format('d-m-Y') : 'Non ancora selezionata';
+    $_SESSION['orario_partenza'] = $orarioPartenza ? $orarioPartenza->format('H:i') : 'Non ancora selezionato';
+    $_SESSION['somma_posizione_km'] = $somma_posizione_km;
+    $_SESSION['tempo_di_percorrenza_hhmm'] = $tempo_di_percorrenza_hhmm;
+    $_SESSION['tempo_di_arrivo'] = $tempo_di_arrivo->format('H:i');
+    $_SESSION['data_partenza_formatted'] = $data_partenza_formatted;
+    $_SESSION['orario_partenza_formatted'] = $orario_partenza_formatted;
 
-    $stmt->bindParam(':distanza_km', $somma_posizione_km, PDO::PARAM_STR);
-    $stmt->bindParam(':costo_biglietto', $costo_biglietto, PDO::PARAM_STR);
-    $stmt->bindParam(':id_stazione_partenza', $stazione_partenza, PDO::PARAM_INT);
-    $stmt->bindParam(':id_stazione_arrivo', $stazione_destinazione, PDO::PARAM_INT);
-    $stmt->bindParam(':data_partenza', $data_partenza_formatted, PDO::PARAM_STR);
-    $stmt->bindParam(':orario_partenza', $orario_partenza_formatted, PDO::PARAM_STR);
-    $stmt->bindParam(':tempo_arrivo', $tempo_di_arrivo_formatted, PDO::PARAM_STR);
-    $stmt->bindParam(':tempo_percorrenza', $tempo_di_percorrenza_formatted, PDO::PARAM_STR);
-
-try {
-    $stmt->execute();
-
-    $id_tratta = $db->lastInsertId();
-    $_SESSION['id_tratta'] = $id_tratta;
-    
-    header('location: ./prenotazione.php');
-    exit();
-} catch (PDOException $e) {
-    header('location: ./Errore.html');
-    exit();
-}
- */   
 ?>
 
 

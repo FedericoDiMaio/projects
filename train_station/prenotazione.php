@@ -8,8 +8,9 @@
 <body>
 
     <?php
-    include "./connessionePDO.php";
     session_start();
+    include "./connessionePDO.php";
+
     $id_tratta = isset($_SESSION['id_tratta']) ? $_SESSION['id_tratta'] : null;
     $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
     $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
@@ -22,7 +23,7 @@
 
     </header>
 
-    <form action="./effettuaPagamento.php" method="POST">
+    <form action="../API/client.php" method="POST">
 
         <?php
 
@@ -72,7 +73,7 @@
                 echo 'ID tratta non presente in sessione.';
             }
 
-            // Salva separatamente tutte le variabili di sessione
+            
             $_SESSION['costo_biglietto_format'] = number_format($result_tratta['costo_biglietto'], 2, '.', '') . ' $';
             $_SESSION['partenza'] = $nome_stazione_partenza;
             $_SESSION['arrivo'] = $nome_stazione_arrivo;
