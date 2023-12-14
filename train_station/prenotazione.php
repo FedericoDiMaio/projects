@@ -14,6 +14,7 @@
     $id_tratta = isset($_SESSION['id_tratta']) ? $_SESSION['id_tratta'] : null;
     $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
     $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
+
     ?>
 
     <header>
@@ -34,7 +35,7 @@
                 $stmt_tratta->execute();
                 $result_tratta = $stmt_tratta->fetch(PDO::FETCH_ASSOC);
 
-                // Dichiarazione delle variabili prima dell'uso
+                
                 $nome_stazione_partenza = '';
                 $nome_stazione_arrivo = '';
 
@@ -52,14 +53,13 @@
                                 $stmt_stazione->execute();
                                 $result_stazione = $stmt_stazione->fetch(PDO::FETCH_ASSOC);
 
-                                // Assegna il nome della stazione alle variabili
+                                
                                 ${'nome_' . str_replace(['id_', '_stazione'], ['', ''], $key)} = $result_stazione ? $result_stazione['nome_stazione'] : 'Sconosciuta';
 
                                 echo '<strong>' . str_replace(['id_', '_stazione'], ['', ''], $key) . ':</strong> ' . ${'nome_' . str_replace(['id_', '_stazione'], ['', ''], $key)} . '<br>';
                                 break;
-                            case 'data_partenza':
-                            case 'orario_partenza':
-                            case 'tempo_arrivo':
+                            case 'data_orario_partenza':
+
                                 echo '<strong>' . str_replace(['_', 'partenza', 'arrivo'], [' ', ' partenza', ' arrivo'], $key) . ':</strong> ' . $value . '<br>';
                                 break;
                             default:
@@ -77,9 +77,9 @@
             $_SESSION['costo_biglietto_format'] = number_format($result_tratta['costo_biglietto'], 2, '.', '') . ' $';
             $_SESSION['partenza'] = $nome_stazione_partenza;
             $_SESSION['arrivo'] = $nome_stazione_arrivo;
-            $_SESSION['data_partenza_format'] = $result_tratta['data_partenza'];
-            $_SESSION['orario_partenza_format'] = $result_tratta['orario_partenza'];
-            $_SESSION['tempo_arrivo_format'] = $result_tratta['tempo_arrivo'];
+            $_SESSION['data_partenza_format'] = $result_tratta['data_orario_partenza'];
+
+            
 
         ?>
 
