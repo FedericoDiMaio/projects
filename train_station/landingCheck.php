@@ -17,7 +17,7 @@
     include "./connessionePDO.php";
 
     session_start();
-
+    $id_utente = isset($_SESSION['id_utente']) ? $_SESSION['id_utente'] : '';
 
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {

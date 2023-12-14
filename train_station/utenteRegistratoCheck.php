@@ -17,6 +17,8 @@
 
     $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
     $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
+    $id_utente = isset($_SESSION['id_utente']) ? $_SESSION['id_utente'] : '';
+    
 
 
 
@@ -213,7 +215,44 @@
         <a href="./out.php"><button>Logout</button></a>
 
     </nav>
+    <?php
+       // Controlla se l'ID utente è disponibile nella sessione
+if (isset($_SESSION['id_utente'])) {
+    $id_utente = $_SESSION['id_utente'];
 
+    // Query per ottenere le tratte associate all'utente
+    $sql_tratte_utente = "
+        SELECT tratta.*, stazione_partenza.nome_stazione AS partenza, stazione_arrivo.nome_stazione AS arrivo
+        FROM tratta
+        INNER JOIN stazione AS stazione_partenza ON tratta.id_stazione_partenza = stazione_partenza.id_stazione
+        INNER JOIN stazione AS stazione_arrivo ON tratta.id_stazione_arrivo = stazione_arrivo.id_stazione
+        WHERE tratta.id_utente = :id_utente
+    ";
+
+    $stmt_tratte_utente = $db->prepare($sql_tratte_utente);
+    $stmt_tratte_utente->bindParam(':id_utente', $id_utente, PDO::PARAM_INT);
+    $stmt_tratte_utente->execute();
+
+    // Stampa le tratte
+    echo "<h3>biglietti prenotati</h3>";
+
+    if ($stmt_tratte_utente->rowCount() > 0) {
+        while ($row = $stmt_tratte_utente->fetch(PDO::FETCH_ASSOC)) {
+            echo "<p>";
+            echo "Data e Orario Partenza: " . $row['data_orario_partenza'] . "<br>";
+            echo "Partenza: " . $row['partenza'] . "<br>";
+            echo "Arrivo: " . $row['arrivo'] . "<br>";
+            echo "Distanza: " . number_format($row['distanza_km'], 1) . " km<br>";
+            echo "Costo Biglietto: " . number_format($row['costo_biglietto'], 1) . " $<br>";
+            echo "</p>";
+        }
+    } else {
+        echo "Nessun biglietto trovato per l'utente";
+    }
+} else {
+    echo "ID utente non disponibile nella sessione.";
+}
+    ?>
 </body>
 
 </html>

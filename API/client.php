@@ -8,7 +8,10 @@
 
 <?php
 session_start();
+$id_tratta = isset($_SESSION['id_tratta']) ? $_SESSION['id_tratta'] : null;
+
 $costo_biglietto_format = $_SESSION['costo_biglietto_format'];
+
 //include "./connessionePDO.php";
     // Controlla se il modulo è stato inviato
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

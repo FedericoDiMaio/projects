@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "./connessionePDO.php";
 
 if (isset($_POST['url_inviante'], $_POST['url_risposta'], $_POST['id_esercente'], $_POST['id_transazione'], $_POST['descrizione_bene'], $_POST['prezzo_transazione'])) {
@@ -33,6 +34,8 @@ if (isset($_POST['url_inviante'], $_POST['url_risposta'], $_POST['id_esercente']
         $stmt->execute();
         http_response_code(200);
         echo "Pagamento effettuato con successo.";
+        header("refresh:2;url=../train_station/utenteRegistrato.php");
+exit;
     } catch (PDOException $e) {
         http_response_code(500);
         echo "Errore durante il salvataggio della transazione: " . $stmt->errorInfo()[2];

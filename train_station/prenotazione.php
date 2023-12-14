@@ -11,10 +11,10 @@
     session_start();
     include "./connessionePDO.php";
 
-    $id_tratta = isset($_SESSION['id_tratta']) ? $_SESSION['id_tratta'] : null;
+    
     $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
     $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
-
+    $id_tratta = isset($_SESSION['id_tratta']) ? $_SESSION['id_tratta'] : '';
     ?>
 
     <header>

@@ -31,6 +31,7 @@
     </form>
 
     <?php
+    session_start();
     // Controlla se il modulo è stato inviato
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Dati da inviare al servizio
