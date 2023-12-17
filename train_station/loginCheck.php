@@ -1,7 +1,7 @@
 <?php
 
 include "./connessionePDO.php";
-$id_utente = isset($_SESSION['id_utente']) ? $_SESSION['id_utente'] : '';
+//$id_utente = isset($_SESSION['id_utente']) ? $_SESSION['id_utente'] : '';
 
 $email = $_POST['email'];
 $password = $_POST['password'];

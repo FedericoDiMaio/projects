@@ -171,26 +171,25 @@
         <select name="treni">
 
             <?php
+                $dataPartenzaSelezionata = isset($_POST['data-partenza']) ? $_POST['data-partenza'] : null;
 
-            $dataPartenzaSelezionata = isset($_POST['data-partenza']) ? $_POST['data-partenza'] : null;
+                if ($dataPartenzaSelezionata) {
+                    
+                    $sql = "SELECT * FROM composizione_treno WHERE data_inizio_servizio <= :dataPartenza AND data_fine_servizio >= :dataPartenza";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':dataPartenza', $dataPartenzaSelezionata);
+                    $stmt->execute();
 
-            if ($dataPartenzaSelezionata) {
-                
-                $sql = "SELECT * FROM composizione_treno WHERE data_inizio_servizio <= :dataPartenza AND data_fine_servizio >= :dataPartenza";
-                $stmt = $db->prepare($sql);
-                $stmt->bindParam(':dataPartenza', $dataPartenzaSelezionata);
-                $stmt->execute();
-
-                if ($stmt->rowCount() > 0) {
-                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        echo '<option value="' . intval($row["id_treno"]) . '">' . $row["id_treno"] . ' - ' . $row["data_inizio_servizio"] . ' a ' . $row["data_fine_servizio"] . '</option>';
+                    if ($stmt->rowCount() > 0) {
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo '<option value="' . intval($row["id_treno"]) . '">' . $row["id_treno"] . ' - ' . $row["data_inizio_servizio"] . ' a ' . $row["data_fine_servizio"] . '</option>';
+                        }
+                    } else {
+                        echo '<option value="-1">Nessun treno disponibile per la data di partenza selezionata</option>';
                     }
                 } else {
-                    echo '<option value="-1">Nessun treno disponibile per la data di partenza selezionata</option>';
+                    echo '<option value="-1">Seleziona prima una data di partenza</option>';
                 }
-            } else {
-                echo '<option value="-1">Seleziona prima una data di partenza</option>';
-            }
             ?>
 
         </select><br>

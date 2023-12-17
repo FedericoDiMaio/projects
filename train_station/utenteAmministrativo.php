@@ -10,11 +10,14 @@
     <?php
 
     include "./connessionePDO.php";
+    include "./connessionePDOPay.php";
+
 
     session_start();
     $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
     $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
 
+    
     ?>
 
     <header>
@@ -24,6 +27,24 @@
 
     </header>
 
+    
+
+    <?php
+    $userID = 1;
+
+    $sql_query2 = "SELECT Saldo FROM conto_corrente WHERE UserID = :userID";
+    $stmt2 = $conn2->prepare($sql_query2);
+    $stmt2->bindParam(':userID', $userID, PDO::PARAM_INT);
+    $stmt2->execute();
+    $result2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+    
+    if ($result2) {
+        $saldoUtente = $result2['Saldo'];
+        echo "la redditività dei treni prenotati è: $saldoUtente EURO";
+    } else {
+        echo "Utente non trovato o nessun saldo disponibile.";
+    }
+    ?>
     <li><a href="./out.php">logout</a></li>
 </body>
 
