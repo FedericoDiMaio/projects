@@ -10,10 +10,10 @@
 
     <form method="post" action="server.php">
         <label for="urlInviante">URL Inviante:</label>
-        <input type="text" name="url_inviante" id="urlInviante" value="https://localhost/progetti_bdc/projects/pay_stream/client.php" required><br>
+        <input type="text" name="url_inviante" id="urlInviante" value="https://webstudenti.unimarconi.it/f.dimaio/projects/train_station/client.php" required><br>
 
         <label for="urlRisposta">URL Risposta:</label>
-        <input type="text" name="url_risposta" id="urlRisposta" value="https://localhost/progetti_bdc/projects/pay_stream/server.php" required><br>
+        <input type="text" name="url_risposta" id="urlRisposta" value="https://webstudenti.unimarconi.it/f.dimaio/projects/pay_stream/server.php" required><br>
 
         <label for="idEsercente">ID Esercente:</label>
         <input type="text" name="id_esercente" id="idEsercente" value="1" required><br>

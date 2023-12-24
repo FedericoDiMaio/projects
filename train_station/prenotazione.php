@@ -10,6 +10,7 @@
     <?php
     session_start();
     include "./connessionePDO.php";
+    $id_utente = isset($_SESSION['id_utente']) ? $_SESSION['id_utente'] : '';
 
     
     $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';

@@ -98,7 +98,7 @@
     </form>
     
     <nav>
-        <li><a href="./out.php"><button>Logout</button></a></li>
+        <li><a href="./landing.php"><button>Logout</button></a></li>
     </nav>
 </body>
 

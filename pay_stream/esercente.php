@@ -111,7 +111,6 @@
                         <th>ID Transazione</th>
                         <th>URL Inviante</th>
                         <th>URL Risposta</th>
-                        <th>Esercente ID</th>
                         <th>Descrizione</th>
                         <th>Prezzo Transazione</th>
                     </tr>";
@@ -122,7 +121,6 @@
                         <td>{$row['TransazioneM2MID']}</td>
                         <td>{$row['URLInviante']}</td>
                         <td>{$row['URLRisposta']}</td>
-                        <td>{$row['EsercenteID']}</td>
                         <td>{$row['Descrizione']}</td>
                         <td>{$row['PrezzoTransazione']}</td>
                     </tr>";
@@ -136,7 +134,7 @@
     </form>
     
     <nav><br>
-        <li><a href="./out.php"><button>Logout</button></a></li>
+        <li><a href="./landing.php"><button>Logout</button></a></li>
     </nav>
 </body>
 
