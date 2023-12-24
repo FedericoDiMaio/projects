@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `transazioni_m2m`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `transazioni_m2m` (
-  `TransazioneM2MID` int(11) NOT NULL,
+  `TransazioneM2MID` int(11) NOT NULL AUTO_INCREMENT,
   `URLInviante` varchar(255) NOT NULL,
   `URLRisposta` varchar(255) NOT NULL,
   `EsercenteID` int(11) DEFAULT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE `transazioni_m2m` (
   PRIMARY KEY (`TransazioneM2MID`),
   KEY `EsercenteID` (`EsercenteID`),
   CONSTRAINT `transazioni_m2m_ibfk_1` FOREIGN KEY (`EsercenteID`) REFERENCES `esercenti` (`EsercenteID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2803586 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `transazioni_m2m` (
 
 LOCK TABLES `transazioni_m2m` WRITE;
 /*!40000 ALTER TABLE `transazioni_m2m` DISABLE KEYS */;
-INSERT INTO `transazioni_m2m` VALUES (1,'https://localhost/progetti_bdc/projects/pay_stream/client.php','https://localhost/progetti_bdc/projects/pay_stream/server.php',1,'caricamento denaro',34.00),(2,'http://localhost/progetti_bdc/projects/API/server.php','http://localhost/progetti_bdc/projects/API/server.php',1,'fe',123.90),(3,'http://localhost/progetti_bdc/projects/API/server.php','http://localhost/progetti_bdc/projects/API/server.php',1,'fe',123.90);
+INSERT INTO `transazioni_m2m` VALUES (1,'http://localhost/progetti_bdc/projects/API/client.php','http://localhost/progetti_bdc/projects/API/server.php',1,'biglietto treno',0.00),(4,'http://localhost/progetti_bdc/projects/API/client.php','http://localhost/progetti_bdc/projects/API/server.php',1,'biglietto treno',1000.55),(5,'http://localhost/progetti_bdc/projects/API/client.php','http://localhost/progetti_bdc/projects/API/server.php',1,'biglietto treno',3.17),(7,'http://localhost/progetti_bdc/projects/API/client.php','http://localhost/progetti_bdc/projects/API/server.php',1,'biglietto treno',1.90),(57,'http://localhost/progetti_bdc/projects/API/client.php','http://localhost/progetti_bdc/projects/API/server.php',1,'biglietto treno',3.55),(2803579,'http://localhost/progetti_bdc/projects/API/client.php','http://localhost/progetti_bdc/projects/API/server.php',1,'biglietto treno',3.55),(2803580,'http://localhost/progetti_bdc/projects/API/client.php','http://localhost/progetti_bdc/projects/API/server.php',1,'biglietto treno',1.90),(2803581,'http://localhost/progetti_bdc/projects/API/client.php','http://localhost/progetti_bdc/projects/API/server.php',1,'biglietto treno',1.90),(2803582,'http://localhost/progetti_bdc/projects/API/client.php','http://localhost/progetti_bdc/projects/API/server.php',1,'biglietto treno',1.90),(2803583,'http://localhost/progetti_bdc/projects/API/client.php','http://localhost/progetti_bdc/projects/API/server.php',1,'biglietto treno',1.90),(2803585,'http://localhost/progetti_bdc/projects/API/client.php','http://localhost/progetti_bdc/projects/API/server.php',1,'biglietto treno',5.00);
 /*!40000 ALTER TABLE `transazioni_m2m` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-12 16:11:22
+-- Dump completed on 2023-12-23 11:00:02

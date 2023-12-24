@@ -1,8 +1,6 @@
 <?php
 session_start();
-
-
-    include "./connessionePDO.php";
+include "./connessionePDO.php";
 
     $email = $_POST['email'];
     $password = $_POST['password'];

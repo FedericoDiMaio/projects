@@ -31,22 +31,7 @@ if (isset($_POST['url_inviante'], $_POST['url_risposta'], $_POST['id_esercente']
         http_response_code(500);
         echo "Errore durante il salvataggio della transazione: " . $stmt->errorInfo()[2];
     }
-        /*
-        $result = $stmt->execute();
-
-        
-        if ($result) {
-            http_response_code(200);
-            echo "Transazione salvata con successo!";
-        } else {
-            http_response_code(500);
-            echo "Errore durante il salvataggio della transazione: " . $stmt->errorInfo()[2];
-        }
-    } else {
-        http_response_code(400);
-        echo "Dati mancanti nella richiesta POST.";
-    }
-    */
+       
 }else{
     http_response_code(400);
     echo "Dati mancanti nella richiesta POST.";

@@ -216,11 +216,11 @@
 
     </nav>
     <?php
-       // Controlla se l'ID utente è disponibile nella sessione
+      
 if (isset($_SESSION['id_utente'])) {
     $id_utente = $_SESSION['id_utente'];
 
-    // Query per ottenere le tratte associate all'utente
+    
     $sql_tratte_utente = "
         SELECT tratta.*, stazione_partenza.nome_stazione AS partenza, stazione_arrivo.nome_stazione AS arrivo
         FROM tratta
@@ -233,7 +233,7 @@ if (isset($_SESSION['id_utente'])) {
     $stmt_tratte_utente->bindParam(':id_utente', $id_utente, PDO::PARAM_INT);
     $stmt_tratte_utente->execute();
 
-    // Stampa le tratte
+    
     echo "<h3>biglietti prenotati</h3>";
 
     if ($stmt_tratte_utente->rowCount() > 0) {

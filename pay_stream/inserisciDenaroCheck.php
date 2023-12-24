@@ -3,12 +3,12 @@ session_start();
 include "./connessionePDO.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validazione e sanitizzazione dell'input
+    
     $importoDaInserire = isset($_POST['inserisci_denaro']) ? $_POST['inserisci_denaro'] : '';
     $importoDaInserire = filter_var($importoDaInserire, FILTER_VALIDATE_FLOAT);
 
     if ($importoDaInserire === false || $importoDaInserire <= 0) {
-        // Gestisci errore o reindirizza a una pagina di errore
+        
         header('location: ./erroreInserimentoDenaro.html');
         exit();
     }
@@ -18,10 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $query_aggiorna_saldo = $db->prepare('UPDATE conto_corrente SET Saldo = Saldo + :importoDaInserire WHERE UserID = :UserID');
         $query_aggiorna_saldo->bindParam(':importoDaInserire', $importoDaInserire, PDO::PARAM_STR);
-
         $UserID = isset($_SESSION['UserID']) ? $_SESSION['UserID'] : '';
         $query_aggiorna_saldo->bindParam(':UserID', $UserID, PDO::PARAM_INT);
-
         $query_aggiorna_saldo->execute();
 
         $db->commit();

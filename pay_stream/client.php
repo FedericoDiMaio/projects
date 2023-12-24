@@ -31,44 +31,44 @@
     </form>
 
     <?php
-    session_start();
-    // Controlla se il modulo è stato inviato
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Dati da inviare al servizio
-        $urlInviante = $_POST['url_inviante'];
-        $urlRisposta = $_POST['url_risposta'];
-        $idEsercente = $_POST['id_esercente'];
-        $idTransazione = $_POST['id_transazione'];
-        $descrizioneBene = $_POST['descrizione_bene'];
-        $prezzoTransazione = $_POST['prezzo_transazione'];
+        session_start();
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            $urlInviante = $_POST['url_inviante'];
+            $urlRisposta = $_POST['url_risposta'];
+            $idEsercente = $_POST['id_esercente'];
+            $idTransazione = $_POST['id_transazione'];
+            $descrizioneBene = $_POST['descrizione_bene'];
+            $prezzoTransazione = $_POST['prezzo_transazione'];
 
-        // Configura la richiesta POST con cURL
-        $ch = curl_init($urlInviante);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
-            'url_inviante' => $urlInviante,
-            'url_risposta' => $urlRisposta,
-            'id_esercente' => $idEsercente,
-            'id_transazione' => $idTransazione,
-            'descrizione_bene' => $descrizioneBene,
-            'prezzo_transazione' => $prezzoTransazione,
-        ]));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            
+            $ch = curl_init($urlInviante);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+                'url_inviante' => $urlInviante,
+                'url_risposta' => $urlRisposta,
+                'id_esercente' => $idEsercente,
+                'id_transazione' => $idTransazione,
+                'descrizione_bene' => $descrizioneBene,
+                'prezzo_transazione' => $prezzoTransazione,
+            ]));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        // Esegui la richiesta
-        $response = curl_exec($ch);
+            
+            $response = curl_exec($ch);
 
-        // Verifica se la risposta è un codice 200
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if ($httpCode === 200) {
-            echo '<p>Transazione avvenuta con successo!</p>';
-        } else {
-            echo '<p>Errore durante la transazione. Codice HTTP: ' . $httpCode . '</p>';
+            
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            if ($httpCode === 200) {
+                echo '<p>Transazione avvenuta con successo!</p>';
+            } else {
+                echo '<p>Errore durante la transazione. Codice HTTP: ' . $httpCode . '</p>';
+            }
+
+            
+            curl_close($ch);
         }
-
-        // Chiudi la connessione cURL
-        curl_close($ch);
-    }
     ?>
 </body>
 </html>

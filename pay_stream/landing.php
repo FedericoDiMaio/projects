@@ -8,12 +8,16 @@
     <header>
         <H1>PayStream Home Page</H1>
     </header>
-
+    <?php
+    session_start();
+    ?>
     <body>
         <header>
         <h1>login</h1>
         </header>
-    
+ 
+        
+
         <form action="./loginCheck.php" method="POST">
             
             <div class="form-row">
@@ -32,7 +36,7 @@
             
             
         </form>
-        <a href="./RegistrazioneUtente.html"><button>Registrati</button></a><br>
+        <a href="./registrazioneUtente.html"><button>Registrati</button></a><br>
     
     
     </body>

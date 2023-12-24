@@ -29,7 +29,7 @@ CREATE TABLE `carte_di_credito` (
   PRIMARY KEY (`CartaID`),
   KEY `UserID` (`UserID`),
   CONSTRAINT `carte_di_credito_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `utenti_registrati` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `carte_di_credito` (
 
 LOCK TABLES `carte_di_credito` WRITE;
 /*!40000 ALTER TABLE `carte_di_credito` DISABLE KEYS */;
-INSERT INTO `carte_di_credito` VALUES (1,1,'4282856558549095'),(2,3,'4864951561113020');
+INSERT INTO `carte_di_credito` VALUES (1,1,'4282856558549095'),(2,3,'4864951561113020'),(3,4,'4119627039399155');
 /*!40000 ALTER TABLE `carte_di_credito` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-12 16:11:22
+-- Dump completed on 2023-12-23 11:00:03

@@ -15,14 +15,14 @@
     $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
     
     if (!empty($nome) && !empty($cognome)) {
-        // Esegui la query per ottenere l'ID dell'utente
+        
         $sql_utente = "SELECT id_utente FROM utente WHERE nome = :nome AND cognome = :cognome";
         $stmt_utente = $db->prepare($sql_utente);
         $stmt_utente->bindParam(':nome', $nome, PDO::PARAM_STR);
         $stmt_utente->bindParam(':cognome', $cognome, PDO::PARAM_STR);
         $stmt_utente->execute();
     
-        // Ottieni l'ID dell'utente
+        
         $result_utente = $stmt_utente->fetch(PDO::FETCH_ASSOC);
         $id_utente = $result_utente ? $result_utente['id_utente'] : 'Sconosciuto';
         $_SESSION['id_utente'] = $id_utente;
@@ -54,15 +54,7 @@
         if (isset($_POST["orario-partenza"])) {
             $orarioPartenza = new DateTime($_POST["orario-partenza"]);
         }
- 
-
-
-    //   echo 'Data di partenza: ' . ($dataPartenza ? htmlspecialchars($dataPartenza->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
-    //    echo 'Data di ritorno: ' . ($dataRitorno ? htmlspecialchars($dataRitorno->format('d-m-Y')) : 'Non ancora selezionata') . '<br>';
-    //    echo 'Orario di partenza: ' . ($orarioPartenza ? htmlspecialchars($orarioPartenza->format('H:i')) : 'Non ancora selezionato') . '<br>';
-    //    echo 'Orario di arrivo: ' . ($orarioArrivo ? htmlspecialchars($orarioArrivo->format('H:i')) : 'Non ancora selezionato') . '<br>';
-
-    ?>
+ ?>
 
     <header>
 
@@ -138,11 +130,11 @@
     </nav>
 
     <?php
-       // Controlla se l'ID utente è disponibile nella sessione
+      
 if (isset($_SESSION['id_utente'])) {
     $id_utente = $_SESSION['id_utente'];
 
-    // Query per ottenere le tratte associate all'utente
+    
     $sql_tratte_utente = "
         SELECT tratta.*, stazione_partenza.nome_stazione AS partenza, stazione_arrivo.nome_stazione AS arrivo
         FROM tratta
@@ -155,7 +147,7 @@ if (isset($_SESSION['id_utente'])) {
     $stmt_tratte_utente->bindParam(':id_utente', $id_utente, PDO::PARAM_INT);
     $stmt_tratte_utente->execute();
 
-    // Stampa le tratte
+    
     echo "<h3>biglietti prenotati</h3>";
 
     if ($stmt_tratte_utente->rowCount() > 0) {

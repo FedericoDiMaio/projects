@@ -33,7 +33,7 @@ CREATE TABLE `utenti_registrati` (
   `ruolo` varchar(45) DEFAULT 'registrato',
   PRIMARY KEY (`UserID`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `utenti_registrati` (
 
 LOCK TABLES `utenti_registrati` WRITE;
 /*!40000 ALTER TABLE `utenti_registrati` DISABLE KEYS */;
-INSERT INTO `utenti_registrati` VALUES (1,'Train','Station','STTTRN22T01F205Z','2022-01-01 00:00:00','train.station@esercente.it','$2y$10$dX.Y4qiBCglmc2RkSmkh0.mnA9bqp4oY275CY1nBmtyVKoXxVsVhe','esercente'),(3,'Federico','Di Maio','DMIFRC90D04D869J','1990-04-04 00:00:00','fed.dimaio@utente.it','$2y$10$/hxiMhMVFsBWIry4k5reou4xxnHF5sSPXo6ZOAlCcGQvKJ/EPEc22','registrato');
+INSERT INTO `utenti_registrati` VALUES (1,'Train','Station','STTTRN22T01F205Z','2022-01-01 00:00:00','train.station@esercente.it','$2y$10$dX.Y4qiBCglmc2RkSmkh0.mnA9bqp4oY275CY1nBmtyVKoXxVsVhe','esercente'),(3,'Federico','Di Maio','DMIFRC90D04D869J','1990-04-04 00:00:00','fed.dimaio@utente.it','$2y$10$/hxiMhMVFsBWIry4k5reou4xxnHF5sSPXo6ZOAlCcGQvKJ/EPEc22','registrato'),(4,'Luca','Baggio','LCUBGG79S04D869K','1979-11-04 00:00:00','luca.baggio@gmail.com','$2y$10$LU57epG78sDJYGof8RKaXecfrqxgaeOpf.tsHh8paN1UfoMlNUaYO','registrato');
 /*!40000 ALTER TABLE `utenti_registrati` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-12 16:11:23
+-- Dump completed on 2023-12-23 11:00:03

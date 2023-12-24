@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Verifica se il codice fiscale è valido
+    
     if (!verificaCodiceFiscale($codice_fiscale)) {
         header('location: ./registrazioneErroreCodiceFiscale.html');
         exit();
@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Verifica se l'utente esiste già
     $query_verifica = $db->prepare('SELECT COUNT(*) FROM utenti_registrati WHERE email = :email');
     $query_verifica->bindParam(':email', $email, PDO::PARAM_STR);
     $query_verifica->execute();
