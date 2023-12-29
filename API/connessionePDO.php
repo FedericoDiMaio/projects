@@ -1,6 +1,12 @@
 <?php
 
-    $servername = "localhost";
+#$servername = "localhost:3306";
+#$username = "f.dimaio";
+#$password = "g5PcpT04";
+#$dbname = "f_dimaio";
+
+
+        $servername = "localhost";
             $username = "root";
             $password = "";
             $dbname = "pay_stream";

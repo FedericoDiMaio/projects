@@ -5,7 +5,7 @@
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $q = $db->prepare("SELECT * FROM utente WHERE email = :email");
+    $q = $db->prepare("SELECT * FROM utenti_registrati_tr WHERE email = :email");
     $q->bindParam(':email', $email, PDO::PARAM_STR);
     $q->execute();
     $q->setFetchMode(PDO::FETCH_ASSOC);
@@ -29,18 +29,17 @@
                     header("location: ./utenteComposizione.php");
                     exit;
                 } else {
-                    header("location: ./loginError.html");
+                    header("location: ./loginErrore.html");
                     exit;
                 }
             } else {
-
-                header("location: ./loginError.html");
+                header("location: ./loginErrore.html");
                 exit;
             }
         }
     } else {
 
-        echo "Utente non trovato";
+        header("location: ./loginErrore.html");
     }
 ?>
 ```

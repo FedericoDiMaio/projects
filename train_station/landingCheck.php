@@ -87,8 +87,24 @@
 
 
 
-    <form action="./landingCheck.php" method="POST">
+    <form action="./landingCheck.php" method="POST" onsubmit="return validateForm()">
+    <script>
+    function validateForm() {
+        var partenzaSelect = document.getElementsByName("partenza")[0];
+        var destinazioneSelect = document.getElementsByName("destinazione")[0];
 
+        var partenzaValue = partenzaSelect.value;
+        var destinazioneValue = destinazioneSelect.value;
+
+        
+        if (partenzaValue === destinazioneValue) {
+            alert("La stazione di partenza non può essere uguale a quella di destinazione.");
+            return false; 
+        }
+
+        return true; 
+    }
+    </script>
         <div class="form-group">
             <label for="partenza">Stazione di partenza</label>
 

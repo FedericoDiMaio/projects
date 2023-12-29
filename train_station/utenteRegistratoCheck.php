@@ -105,8 +105,24 @@
 
     </header>
 
-    <form action="./utenteRegistratoCheck.php" method="POST">
+    <form action="./utenteRegistratoCheck.php" method="POST" onsubmit="return validateForm()">
+    <script>
+    function validateForm() {
+        var partenzaSelect = document.getElementsByName("partenza")[0];
+        var destinazioneSelect = document.getElementsByName("destinazione")[0];
 
+        var partenzaValue = partenzaSelect.value;
+        var destinazioneValue = destinazioneSelect.value;
+
+        
+        if (partenzaValue === destinazioneValue) {
+            alert("La stazione di partenza non può essere uguale a quella di destinazione.");
+            return false; 
+        }
+
+        return true; 
+    }
+    </script>
         <div class="form-group">
             <label for="partenza">Stazione di partenza</label>
 
@@ -128,7 +144,7 @@
             </select>
 
         </div>
-
+        
         <div class="form-group">
             <label for="destinazione">Stazione di destinazione</label>
 
@@ -168,11 +184,11 @@
         <select name="treni">
 
             <?php
-
+            $buttonDisabled = false;
             $dataPartenzaSelezionata = isset($_POST['data-partenza']) ? $_POST['data-partenza'] : null;
 
             if ($dataPartenzaSelezionata) {
-                // Modifica la query SQL per cercare il treno in base alla data di partenza
+                
                 $sql = "SELECT * FROM composizione_treno WHERE data_inizio_servizio <= :dataPartenza AND data_fine_servizio >= :dataPartenza";
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(':dataPartenza', $dataPartenzaSelezionata);
@@ -184,10 +200,11 @@
                     }
                 } else {
                     echo '<option value="-1">Nessun treno disponibile per la data di partenza selezionata</option>';
+                    $buttonDisabled = true; 
                 }
             } else {
-
                 echo '<option value="-1">Seleziona prima una data di partenza</option>';
+                $buttonDisabled = true; 
             }
             ?>
 
@@ -205,7 +222,8 @@
 
     <form action="./checkTratta.php" method="POST">
 
-        <button type="submit">prenota treno</button>
+    <button type="submit" <?php if ($buttonDisabled) echo 'disabled'; ?>>Prenota treno</button>
+
 
     </form>
 

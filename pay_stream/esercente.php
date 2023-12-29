@@ -2,15 +2,15 @@
 <html>
 
 <head>
-    <title>TrainStation profilo esercente</title>
+    <title>pay_stream profilo esercente</title>
 </head>
 
 <body>
 
     <?php
-        session_start();
-        include "./connessionePDO.php";
         
+        include "./connessionePDO.php";
+        session_start();
 
         $userID = isset($_SESSION['UserID']) ? $_SESSION['UserID'] : '';
         $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
@@ -77,64 +77,116 @@
     </form><br>
 
 
-    <form action="./inserisciDenaroCheck.php" method="POST">
-            
+    <form action="./inserisciDenaroCheckEsercente.php" method="POST">
+
+    <div style="display: inline-block;">        
         <div class="form-group">
-            <label for="inserisci_denaro">Inserisci Denaro:</label>
+            <label for="inserisci_denaro">Inserisci denaro:</label>
             <input type="text" name="inserisci_denaro" placeholder="esempio 10.00" required>
+            
+        </div>
+    </div>
+    <div style="display: inline-block;">
+        <div class="form-group">
+            <label for="causale">Causale:</label>
+            <input type="text" name="causale" placeholder="Inserisci la causale" required>
             <button type="submit">Inserisci Denaro</button>
         </div>
+    </div>
 
             <?php
+            if(!isset($_SESSION['UserID'])) {
+                header("location: ./loginError.html");
+                exit;
+            }
             
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     unset($_SESSION['importoDaInserire']);
+                    unset($_SESSION['causale']);
                 
                     if (isset($_POST['inserisci_denaro'])) {
                         $_SESSION['importoDaInserire'] = $_POST['inserisci_denaro'];
+                        $_SESSION['causale'] = $_POST['causale'];
                         
                     }
                 }
                 
 
-                $sql_transazioni = "SELECT * FROM transazioni_m2m";
-                $stmt_transazioni = $db->prepare($sql_transazioni);
-                $stmt_transazioni->execute();
-                $risultati_transazioni = $stmt_transazioni->fetchAll(PDO::FETCH_ASSOC);
-
-        
-        if ($stmt_transazioni->rowCount() > 0) {
-            
-            echo "<table border='1'>
-            <caption>TRANSAZIONI</caption>
-                    <tr>
-                        <th>ID Transazione</th>
-                        <th>URL Inviante</th>
-                        <th>URL Risposta</th>
-                        <th>Descrizione</th>
-                        <th>Prezzo Transazione</th>
-                    </tr>";
-
-            
-            foreach ($risultati_transazioni as $row) {
-                echo "<tr>
-                        <td>{$row['TransazioneM2MID']}</td>
-                        <td>{$row['URLInviante']}</td>
-                        <td>{$row['URLRisposta']}</td>
-                        <td>{$row['Descrizione']}</td>
-                        <td>{$row['PrezzoTransazione']}</td>
-                    </tr>";
-            }
-
-            echo "</table>";
-        } else {
-            echo "Nessun risultato trovato";
-        }
+                
             ?>
     </form>
+
+    <form action="./inviaDenaroCheckEsercente.php" method="POST">
+    
+            
+            <div style="display: inline-block;">
+            <div class="form-group">
+                <label for="invia_denaro_check">Invia denaro:</label>
+                <input type="text" name="invia_denaro_check" placeholder="esempio 10.00" required>
+               
+            </div>
+        </div>
+        
+        <div style="display: inline-block;">
+            <div class="form-group">
+                <label for="causale">Causale:</label>
+                <input type="text" name="causale" placeholder="Inserisci la causale" required>
+                <button type="submit">Invia denaro</button>
+            </div>
+        </div>
+        
+            
+                        <?php
+                        
+                            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                                unset($_SESSION['importoDaInviare']);
+                                unset($_SESSION['causale']);
+                            
+                                if (isset($_POST['inserisci_denaro'])) {
+                                    $_SESSION['importoDaInviare'] = $_POST['invia_denaro_check'];
+                                    $_SESSION['causale'] = $_POST['causale'];
+                                }
+                            }
+                        ?>
+            </form><br>
+
+
+            <?php
+    $query_select_estratto_conto = $db->prepare('SELECT * FROM estratto_conto WHERE UserID = :userID');
+    $query_select_estratto_conto->bindParam(':userID', $userID, PDO::PARAM_INT);
+    $query_select_estratto_conto->execute();
+    $estratto_conto_rows = $query_select_estratto_conto->fetchAll(PDO::FETCH_ASSOC);
+            
+            
+            if (!empty($estratto_conto_rows)) {
+                echo "<table border='1'>
+                        <caption>Estratto Conto</caption>
+                        <tr>
+                            <th>Operazione</th>
+                            
+                            <th>Uscite</th>
+                            <th>Entrate</th>
+                            <th>Causale</th>
+                        </tr>";
+            
+                foreach ($estratto_conto_rows as $row) {
+                    echo "<tr>
+                            <td>{$row['operazione']}</td>
+                            
+                            <td>{$row['uscite']}</td>
+                            <td>{$row['entrate']}</td>
+                            <td>{$row['causale']}</td>
+                        </tr>";
+                }
+            
+                echo "</table>";
+            } else {
+                echo "Nessuna operazione effettuata sul tuo conto corrente.";
+            }
+            ?>
     
     <nav><br>
-        <li><a href="./landing.php"><button>Logout</button></a></li>
+        <li><a href="./out.php"><button>Logout</button></a></li>
     </nav>
 </body>
 

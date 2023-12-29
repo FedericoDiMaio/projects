@@ -9,7 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $codice_fiscale = $_POST['codice_fiscale'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $conferma_password = $_POST["conferma_password"];
 
+    if ($password != $conferma_password) {
+        echo "Le password non coincidono riprova ad effettuare la registrazione";
+        exit();
+    }
     
     if (!verificaCodiceFiscale($codice_fiscale)) {
         header('location: ./registrazioneErroreCodiceFiscale.html');

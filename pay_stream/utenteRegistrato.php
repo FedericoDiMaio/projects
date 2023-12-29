@@ -2,22 +2,18 @@
 <html>
 
 <head>
-    <title>TrainStation profilo registrato</title>
+    <title>pay_stream profilo registrato</title>
 </head>
 
 <body>
 
     <?php
-        session_start();
- 
-        include "./connessionePDO.php";
+    session_start();
+    include "./connessionePDO.php";
         
-
         $userID = isset($_SESSION['UserID']) ? $_SESSION['UserID'] : '';
         $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
         $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
-        $carte_di_credito = isset($_SESSION['carte_di_credito']) ? $_SESSION['carte_di_credito'] : '';
-        $numeroCarta = isset($_SESSION['NumeroCarta']) ? $_SESSION['NumeroCarta'] : '';
         
     ?>
 
@@ -65,40 +61,162 @@
                 foreach ($risultati_carte_di_credito as $carte_di_credito) {
                     echo '<option value="' . htmlspecialchars($carte_di_credito['CartaID']) . '">' . 'Numero carta: ' . htmlspecialchars($carte_di_credito['NumeroCarta']) . '</option>';
 
-                echo $_SESSION['NumeroCarta'];
+                
                 
             }
                 
             ?>
             
             </select>
-        </div>
-    </form><br>
+        </div><br>
+
+        <form action="./utenteRegistrato.php" method="POST">
+            <p style="display: inline-block; margin-right: 10px;">Per generare una nuova carta di credito:</p>
+            <button type="submit" name="genera_carta">Genera Carta di credito</button>
+
+            
+
+        <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['genera_carta'])) {
+                if (!empty($userID)) {
+                    function generaNumeroCarta() {
+                        $numeroCarta = '4';
+                        for ($i = 0; $i < 15; $i++) {
+                            $numeroCarta .= rand(0, 9);
+                        }
+                        return $numeroCarta;
+                    }
+
+                    try {
+                        $numeroCarta = generaNumeroCarta();
+
+                        $query_inserimento_carta = $db->prepare('INSERT INTO carte_di_credito (UserID, NumeroCarta) VALUES (:UserID, :NumeroCarta)');
+                        $query_inserimento_carta->bindParam(':UserID', $userID, PDO::PARAM_INT);
+                        $query_inserimento_carta->bindParam(':NumeroCarta', $numeroCarta, PDO::PARAM_STR);
+                        $query_inserimento_carta->execute();
+
+                        
+                    } catch (PDOException $e) {
+                        echo "Errore durante l'inserimento della carta: " . $e->getMessage();
+                    }
+                } else {
+                    echo "ID dell'utente non disponibile.";
+                }
+            }
+
+        ?>
+        </form>
+    </form>
 
 
     <form action="./inserisciDenaroCheck.php" method="POST">
             
-        <div class="form-group">
-            <label for="inserisci_denaro">Inserisci Denaro:</label>
-            <input type="text" name="inserisci_denaro" placeholder="esempio 10.00" required>
-            <button type="submit">Inserisci Denaro</button>
+        <div style="display: inline-block;">
+            <div class="form-group">
+                <label for="inserisci_denaro">Inserisci Denaro:</label>
+                <input type="text" name="inserisci_denaro" placeholder="esempio 10.00" required>
+            </div>
         </div>
 
-            <?php
-            
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    unset($_SESSION['importoDaInserire']);
+        <div style="display: inline-block;">
+            <div class="form-group">
+                <label for="causale">Causale:</label>
+                <input type="text" name="causale" placeholder="Inserisci la causale" required>
+                <button type="submit">Inserisci Denaro</button>
+            </div>
+        </div>
+
+
+        <?php
+            if(!isset($_SESSION['UserID'])) {
+                header("location: ./loginError.html");
+                exit;
+            }
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                unset($_SESSION['importoDaInserire']);
+                unset($_SESSION['causale']);
                 
-                    if (isset($_POST['inserisci_denaro'])) {
-                        $_SESSION['importoDaInserire'] = $_POST['inserisci_denaro'];
+                if (isset($_POST['inserisci_denaro'])) {
+                    $_SESSION['importoDaInserire'] = $_POST['inserisci_denaro'];
+                    $_SESSION['causale'] = $_POST['causale'];
                         
-                    }
                 }
-            ?>
+            }
+        ?>
     </form>
+
+    <form action="./inviaDenaroCheck.php" method="POST">
+            
+    <div style="display: inline-block;">
+    <div class="form-group">
+        <label for="invia_denaro_check">Invia denaro:</label>
+        <input type="text" name="invia_denaro_check" placeholder="esempio 10.00" required>
+       
+    </div>
+    </div>
+
+    <div style="display: inline-block;">
+        <div class="form-group">
+        <label for="causale">Causale:</label>
+        <input type="text" name="causale" placeholder="Inserisci la causale" required>
+        <button type="submit">Invia denaro</button>
+    </div>
+    </div>
+
     
-    <nav>
-        <li><a href="./landing.php"><button>Logout</button></a></li>
+                <?php
+                
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                        unset($_SESSION['importoDaInviare']);
+                        unset($_SESSION['causale']);
+                    
+                        if (isset($_POST['inserisci_denaro'])) {
+                            $_SESSION['importoDaInviare'] = $_POST['invia_denaro_check'];
+                            $_SESSION['causale'] = $_POST['causale'];
+                        }
+                    }
+                ?>
+    </form><br>
+
+    
+
+
+    <?php
+            $query_select_estratto_conto = $db->prepare('SELECT * FROM estratto_conto WHERE UserID = :userID');
+            $query_select_estratto_conto->bindParam(':userID', $userID, PDO::PARAM_INT);
+            $query_select_estratto_conto->execute();
+            $estratto_conto_rows = $query_select_estratto_conto->fetchAll(PDO::FETCH_ASSOC);
+            
+            
+            if (!empty($estratto_conto_rows)) {
+                echo "<table border='1'>
+                        <caption>Estratto Conto</caption>
+                        <tr>
+                            <th>Operazione</th>
+                            
+                            <th>Uscite</th>
+                            <th>Entrate</th>
+                            <th>Causale</th>
+                        </tr>";
+            
+                foreach ($estratto_conto_rows as $row) {
+                    echo "<tr>
+                            <td>{$row['operazione']}</td>
+                            
+                            <td>{$row['uscite']}</td>
+                            <td>{$row['entrate']}</td>
+                            <td>{$row['causale']}</td>
+                        </tr>";
+                }
+            
+                echo "</table>";
+            } else {
+                echo "Nessuna operazione effettuata sul tuo conto corrente.";
+            }
+            ?>
+    <nav><br>
+        <li><a href="./out.php"><button>Logout</button></a></li>
     </nav>
 </body>
 

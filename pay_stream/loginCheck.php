@@ -25,6 +25,9 @@ include "./connessionePDO.php";
                 } elseif ($row['ruolo'] === 'esercente') {
                     header("location: ./esercente.php");
                     exit;
+                } elseif ($row['ruolo'] === 'm2m') {
+                    header("location: ./profiloM2M.php");
+                    exit;
                 } else {
                     header("location: ./loginError.html");
                     exit;
@@ -37,6 +40,6 @@ include "./connessionePDO.php";
         }
     } else {
         
-        echo "Utente non trovato";
+        header("location: ./loginError.html");
     }
 ?>

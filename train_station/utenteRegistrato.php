@@ -16,7 +16,7 @@
     
     if (!empty($nome) && !empty($cognome)) {
         
-        $sql_utente = "SELECT id_utente FROM utente WHERE nome = :nome AND cognome = :cognome";
+        $sql_utente = "SELECT id_utente FROM utenti_registrati_tr WHERE nome = :nome AND cognome = :cognome";
         $stmt_utente = $db->prepare($sql_utente);
         $stmt_utente->bindParam(':nome', $nome, PDO::PARAM_STR);
         $stmt_utente->bindParam(':cognome', $cognome, PDO::PARAM_STR);
@@ -64,8 +64,27 @@
     </header>
 
 
-    <form action="./utenteRegistratoCheck.php" method="POST">
-        <div class="form-group">
+    <form action="./utenteRegistratoCheck.php" method="POST" onsubmit="return validateForm()">
+    <script>
+    function validateForm() {
+        var partenzaSelect = document.getElementsByName("partenza")[0];
+        var destinazioneSelect = document.getElementsByName("destinazione")[0];
+
+        var partenzaValue = partenzaSelect.value;
+        var destinazioneValue = destinazioneSelect.value;
+
+        
+        if (partenzaValue === destinazioneValue) {
+            alert("La stazione di partenza non può essere uguale a quella di destinazione.");
+            return false; 
+        }
+
+        return true; 
+    }
+    </script>
+    
+    
+    <div class="form-group">
             <label for="partenza">Stazione di partenza</label>
 
             <select name="partenza">

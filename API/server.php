@@ -25,13 +25,13 @@ if (isset($_POST['url_inviante'], $_POST['url_risposta'], $_POST['id_esercente']
 
     try {
 
-    // Aggiorna il saldo nella tabella conto_corrente esercente
+    
     $queryUpdateSaldo = "UPDATE conto_corrente SET Saldo = Saldo + :prezzoTransazione WHERE UserID = :idEsercente";
     $stmtUpdateSaldo = $db->prepare($queryUpdateSaldo);
     $stmtUpdateSaldo->bindParam(':prezzoTransazione', $prezzoTransazione, PDO::PARAM_STR);
     $stmtUpdateSaldo->bindParam(':idEsercente', $idEsercente, PDO::PARAM_INT);
     $stmtUpdateSaldo->execute();
-    // Aggiorna il saldo nella tabella contro_corrente in base all'utente che ha effettuato il pagamento $id_utente
+    
     $queryUpdateSaldo = "UPDATE conto_corrente SET Saldo = Saldo - :prezzoTransazione WHERE UserID = :id_utente";
     $stmtUpdateSaldo = $db->prepare($queryUpdateSaldo);
     $stmtUpdateSaldo->bindParam(':prezzoTransazione', $prezzoTransazione, PDO::PARAM_STR);
