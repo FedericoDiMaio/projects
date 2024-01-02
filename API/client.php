@@ -13,7 +13,7 @@ $id_utente = isset($_SESSION['id_utente']) ? $_SESSION['id_utente'] : '';
 
 $costo_biglietto_format = $_SESSION['costo_biglietto_format'];
 
-//include "./connessionePDO.php";
+include "./connessionePDO.php";
     // Controlla se il modulo è stato inviato
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Dati da inviare al servizio

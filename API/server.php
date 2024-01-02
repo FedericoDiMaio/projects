@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "./connessionePDO.php";
+include "../pay_stream/connessionePDO2.php";
 $id_utente = isset($_SESSION['id_utente']) ? $_SESSION['id_utente'] : '';
 
 if (isset($_POST['url_inviante'], $_POST['url_risposta'], $_POST['id_esercente'], $_POST['id_transazione'], $_POST['descrizione_bene'], $_POST['prezzo_transazione'])) {
@@ -28,13 +29,13 @@ if (isset($_POST['url_inviante'], $_POST['url_risposta'], $_POST['id_esercente']
 
     
     $queryUpdateSaldo = "UPDATE conto_corrente SET Saldo = Saldo + :prezzoTransazione WHERE UserID = :idEsercente";
-    $stmtUpdateSaldo = $db->prepare($queryUpdateSaldo);
+    $stmtUpdateSaldo = $db2->prepare($queryUpdateSaldo);
     $stmtUpdateSaldo->bindParam(':prezzoTransazione', $prezzoTransazione, PDO::PARAM_STR);
     $stmtUpdateSaldo->bindParam(':idEsercente', $idEsercente, PDO::PARAM_INT);
     $stmtUpdateSaldo->execute();
     
     $queryUpdateSaldo = "UPDATE conto_corrente SET Saldo = Saldo - :prezzoTransazione WHERE UserID = :id_utente";
-    $stmtUpdateSaldo = $db->prepare($queryUpdateSaldo);
+    $stmtUpdateSaldo = $db2->prepare($queryUpdateSaldo);
     $stmtUpdateSaldo->bindParam(':prezzoTransazione', $prezzoTransazione, PDO::PARAM_STR);
     $stmtUpdateSaldo->bindParam(':id_utente', $id_utente, PDO::PARAM_INT);
     $stmtUpdateSaldo->execute();

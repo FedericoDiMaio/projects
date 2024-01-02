@@ -185,33 +185,35 @@
 
         <select name="treni">
 
-            <?php
-            $buttonDisabled = false;
-            $dataPartenzaSelezionata = isset($_POST['data-partenza']) ? $_POST['data-partenza'] : null;
+        <?php
+$buttonDisabled = false;
+$dataPartenzaSelezionata = isset($_POST['data-partenza']) ? $_POST['data-partenza'] : null;
 
-            if ($dataPartenzaSelezionata) {
-                
-                $sql = "SELECT * FROM composizione_treno WHERE data_inizio_servizio <= :dataPartenza AND data_fine_servizio >= :dataPartenza";
-                $stmt = $db->prepare($sql);
-                $stmt->bindParam(':dataPartenza', $dataPartenzaSelezionata);
-                $stmt->execute();
+if ($dataPartenzaSelezionata) {
+    $sql = "SELECT * FROM composizione_treno WHERE data_inizio_servizio <= :dataPartenza AND data_fine_servizio >= :dataPartenza";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':dataPartenza', $dataPartenzaSelezionata);
+    $stmt->execute();
 
-                if ($stmt->rowCount() > 0) {
-                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        echo '<option value="' . intval($row["id_treno"]) . '">' . $row["id_treno"]. '</option>';
-                    }
-                } else {
-                    echo '<option value="-1">Nessun treno disponibile per la data di partenza selezionata</option>';
-                    $buttonDisabled = true; 
-                }
-            } else {
-                echo '<option value="-1">Seleziona prima una data di partenza</option>';
-                $buttonDisabled = true; 
-            }
-            ?>
+    if ($stmt->rowCount() > 0) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<option value="' . intval($row["id_treno"]) . '">' . $row["id_treno"]. '</option>';
+        
+        // Memorizza l'ID del treno direttamente nella variabile di sessione
+        $_SESSION['id_treno_selezionato'] = $row["id_treno"];
+    } else {
+        echo '<option value="-1">Nessun treno disponibile per la data di partenza selezionata</option>';
+        $buttonDisabled = true; 
+    }
+} else {
+    echo '<option value="-1">Seleziona prima una data di partenza</option>';
+    $buttonDisabled = true; 
+}
+?>
+
 
         </select><br>
-
+            
 
         <button type="submit">Cerca treni</button>
 
@@ -225,7 +227,6 @@
     <form action="./checkTratta.php" method="POST">
 
     <button type="submit" <?php if ($buttonDisabled) echo 'disabled'; ?>>Prenota treno</button>
-
 
     </form>
 
@@ -264,6 +265,7 @@ if (isset($_SESSION['id_utente'])) {
             echo "Arrivo: " . $row['arrivo'] . "<br>";
             echo "Distanza: " . number_format($row['distanza_km'], 1) . " km<br>";
             echo "Costo Biglietto: " . number_format($row['costo_biglietto'], 1) . " $<br>";
+            echo "Posto: " . $row['posto'] . "<br>";
             echo "</p>";
         }
     } else {

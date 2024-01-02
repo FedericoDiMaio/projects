@@ -179,6 +179,7 @@ if (isset($_SESSION['id_utente'])) {
             echo "Arrivo: " . $row['arrivo'] . "<br>";
             echo "Distanza: " . number_format($row['distanza_km'], 1) . " km<br>";
             echo "Costo Biglietto: " . number_format($row['costo_biglietto'], 1) . " $<br>";
+            echo "Posto: " . $row['posto'] . "<br>";
             echo "</p>";
         }
     } else {

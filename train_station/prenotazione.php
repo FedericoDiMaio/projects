@@ -18,8 +18,7 @@
     $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
     $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
     $id_tratta = isset($_SESSION['id_tratta']) ? $_SESSION['id_tratta'] : '';
-    $id_treno_selezionato = isset($_SESSION['id_treno_selezionato']) ? $_SESSION['id_treno_selezionato'] : '';
-    echo $id_treno_selezionato;
+
     ?>
 
     <header>

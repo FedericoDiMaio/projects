@@ -6,7 +6,7 @@
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "pay_stream";
+        $dbname = "train_station";
 
         try {
             $db = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
