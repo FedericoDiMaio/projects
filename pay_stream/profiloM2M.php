@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>pay_stream profilo esercente</title>
+    <title>pay_stream profilo M2M</title>
 </head>
 
 <body>

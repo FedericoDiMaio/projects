@@ -28,7 +28,7 @@
     <form action="./loginCheck.php" method="POST">
         <?php
         session_start();
-        include "./connessionePDO.php";
+        include "./connessionePDO2.php";
         ?>
 
         <div class="form-row">
@@ -46,7 +46,7 @@
         </div>
 
     </form><br>
-    <a href="documentazione/termini_condizioni.pdf">Termini e Condizioni</a>
+    <a href="documentazione/termini e condizioni.pdf">Termini e Condizioni</a>
 
 
     <script>

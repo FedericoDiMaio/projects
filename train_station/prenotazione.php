@@ -3,6 +3,8 @@
 
 <head>
     <title>TrainStation prenotazione tickets</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	
 </head>
 
 <body>
@@ -81,6 +83,7 @@
             $_SESSION['partenza'] = $nome_stazione_partenza;
             $_SESSION['arrivo'] = $nome_stazione_arrivo;
             $_SESSION['data_partenza_format'] = $result_tratta['data_orario_partenza'];
+            $_SESSION['causale'] = "biglietto treno";
 
             
 
@@ -89,7 +92,8 @@
         <br><button type="submit">effettua pagamento</button>
 
     </form>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+	
 </body>
 
 </html>

@@ -9,7 +9,7 @@
 
     <?php
         
-        include "./connessionePDO.php";
+        include "./connessionePDO2.php";
         session_start();
 
         $userID = isset($_SESSION['UserID']) ? $_SESSION['UserID'] : '';
@@ -36,7 +36,7 @@
 
             <?php
                 $sql_conto_corrente = "SELECT * FROM conto_corrente WHERE UserID = :userID";   
-                $stmt_conto_corrente = $db->prepare($sql_conto_corrente);
+                $stmt_conto_corrente = $db2->prepare($sql_conto_corrente);
                 $stmt_conto_corrente->bindParam(':userID', $userID, PDO::PARAM_INT);
                 $stmt_conto_corrente->execute();
                 $risultati_conto_corrente = $stmt_conto_corrente->fetchAll(PDO::FETCH_ASSOC);
@@ -57,7 +57,7 @@
 
             <?php
                 $sql_carte_di_credito = "SELECT * FROM carte_di_credito WHERE UserID = :userID";   
-                $stmt_carte_di_credito = $db->prepare($sql_carte_di_credito);
+                $stmt_carte_di_credito = $db2->prepare($sql_carte_di_credito);
                 $stmt_carte_di_credito->bindParam(':userID', $userID, PDO::PARAM_INT);
                 $stmt_carte_di_credito->execute();
                 $risultati_carte_di_credito = $stmt_carte_di_credito->fetchAll(PDO::FETCH_ASSOC);
@@ -75,6 +75,43 @@
             </select>
         </div>
     </form><br>
+
+    <form action="./esercente.php" method="POST">
+            <p style="display: inline-block; margin-right: 10px;">Per generare una nuova carta di credito:</p>
+            <button type="submit" name="genera_carta">Genera Carta di credito</button>
+
+            
+
+            <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['genera_carta'])) {
+                if (!empty($userID)) {
+                    function generaNumeroCarta() {
+                        $numeroCarta = '4';
+                        for ($i = 0; $i < 15; $i++) {
+                            $numeroCarta .= rand(0, 9);
+                        }
+                        return $numeroCarta;
+                    }
+
+                    try {
+                        $numeroCarta = generaNumeroCarta();
+
+                        $query_inserimento_carta = $db2->prepare('INSERT INTO carte_di_credito (UserID, NumeroCarta) VALUES (:UserID, :NumeroCarta)');
+                        $query_inserimento_carta->bindParam(':UserID', $userID, PDO::PARAM_INT);
+                        $query_inserimento_carta->bindParam(':NumeroCarta', $numeroCarta, PDO::PARAM_STR);
+                        $query_inserimento_carta->execute();
+
+                        
+                    } catch (PDOException $e) {
+                        echo "Errore durante l'inserimento della carta: " . $e->getMessage();
+                    }
+                } else {
+                    echo "ID dell'utente non disponibile.";
+                }
+            }
+
+        ?>
+        </form>
 
 
     <form action="./inserisciDenaroCheckEsercente.php" method="POST">
@@ -152,7 +189,7 @@
 
 
             <?php
-    $query_select_estratto_conto = $db->prepare('SELECT * FROM estratto_conto WHERE UserID = :userID');
+    $query_select_estratto_conto = $db2->prepare('SELECT * FROM estratto_conto WHERE UserID = :userID');
     $query_select_estratto_conto->bindParam(':userID', $userID, PDO::PARAM_INT);
     $query_select_estratto_conto->execute();
     $estratto_conto_rows = $query_select_estratto_conto->fetchAll(PDO::FETCH_ASSOC);

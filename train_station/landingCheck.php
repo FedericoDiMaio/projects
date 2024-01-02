@@ -3,6 +3,8 @@
 
 <head>
     <title>TrainStation home page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	
 </head>
 
 <header>
@@ -173,11 +175,12 @@
 
     <form action="./loginNonEffettuato.html" method="POST">
 
-        <label for="treni">Treni disponibili</label>
+        <label for="treni">identificativo del treno disponibile</label>
 
         <select name="treni">
 
             <?php
+            $buttonDisabled = false;
                 $dataPartenzaSelezionata = isset($_POST['data-partenza']) ? $_POST['data-partenza'] : null;
 
                 if ($dataPartenzaSelezionata) {
@@ -189,19 +192,21 @@
 
                     if ($stmt->rowCount() > 0) {
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                            echo '<option value="' . intval($row["id_treno"]) . '">' . $row["id_treno"] . ' - ' . $row["data_inizio_servizio"] . ' a ' . $row["data_fine_servizio"] . '</option>';
+                            echo '<option value="' . intval($row["id_treno"]) . '">' . $row["id_treno"] . '</option>';
                         }
                     } else {
                         echo '<option value="-1">Nessun treno disponibile per la data di partenza selezionata</option>';
+                        $buttonDisabled = true; 
                     }
                 } else {
                     echo '<option value="-1">Seleziona prima una data di partenza</option>';
+                    $buttonDisabled = true; 
                 }
             ?>
 
         </select><br>
 
-        <button type="submit">prenota treno</button>
+        <button type="submit" <?php if ($buttonDisabled) echo 'disabled'; ?>>Prenota treno</button>
 
     </form>
 
@@ -211,7 +216,8 @@
         <a href="./registrazione.html"><button>Signup</button></a>
 
     </nav>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+	
 </body>
 
 </html>

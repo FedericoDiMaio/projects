@@ -1,11 +1,11 @@
 <?php
 session_start();
-include "./connessionePDO.php";
+include "./connessionePDO2.php";
 
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $q = $db->prepare("SELECT * FROM utenti_registrati WHERE email = :email");
+    $q = $db2->prepare("SELECT * FROM utenti_registrati WHERE email = :email");
     $q->bindParam(':email', $email, PDO::PARAM_STR);
     $q->execute();
     $q->setFetchMode(PDO::FETCH_ASSOC);
