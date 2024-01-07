@@ -3,6 +3,7 @@
 
 <head>
     <title>pay_stream profilo M2M</title>
+    
 </head>
 
 <body>
@@ -72,6 +73,7 @@
     <nav><br>
         <li><a href="./out.php"><button>Logout</button></a></li>
     </nav>
+    
 </body>
 
 </html>

@@ -16,32 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `biglietto`
+-- Table structure for table `transazioni_m2m`
 --
 
-DROP TABLE IF EXISTS `biglietto`;
+DROP TABLE IF EXISTS `transazioni_m2m`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `biglietto` (
-  `id_biglietto` int(11) NOT NULL,
-  `id_utente` int(11) DEFAULT NULL,
-  `id_viaggio` int(11) DEFAULT NULL,
-  `prezzo` float DEFAULT NULL,
-  PRIMARY KEY (`id_biglietto`),
-  KEY `id_utente_idx` (`id_utente`),
-  KEY `id_viaggio_idx` (`id_viaggio`),
-  CONSTRAINT `id_utente` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id_utente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `id_viaggio` FOREIGN KEY (`id_viaggio`) REFERENCES `viaggio` (`id_viaggio`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `transazioni_m2m` (
+  `TransazioneM2MID` int(11) NOT NULL AUTO_INCREMENT,
+  `URLInviante` varchar(255) NOT NULL,
+  `URLRisposta` varchar(255) NOT NULL,
+  `EsercenteID` int(11) DEFAULT NULL,
+  `Descrizione` varchar(255) NOT NULL,
+  `PrezzoTransazione` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`TransazioneM2MID`),
+  KEY `EsercenteID` (`EsercenteID`),
+  CONSTRAINT `transazioni_m2m_ibfk_1` FOREIGN KEY (`EsercenteID`) REFERENCES `esercenti` (`EsercenteID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `biglietto`
+-- Dumping data for table `transazioni_m2m`
 --
 
-LOCK TABLES `biglietto` WRITE;
-/*!40000 ALTER TABLE `biglietto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `biglietto` ENABLE KEYS */;
+LOCK TABLES `transazioni_m2m` WRITE;
+/*!40000 ALTER TABLE `transazioni_m2m` DISABLE KEYS */;
+INSERT INTO `transazioni_m2m` VALUES (1,'https://webstudenti.unimarconi.it/f.dimaio/projects/train_station/client.php','https://webstudenti.unimarconi.it/f.dimaio/projects/train_station/server.php',1,'biglietto treno',7.20),(2,'https://webstudenti.unimarconi.it/f.dimaio/projects/train_station/client.php','https://webstudenti.unimarconi.it/f.dimaio/projects/train_station/server.php',1,'biglietto treno',7.20);
+/*!40000 ALTER TABLE `transazioni_m2m` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-16  8:33:01
+-- Dump completed on 2024-01-07 11:08:12

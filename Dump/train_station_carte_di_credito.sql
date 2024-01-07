@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: pay_stream
+-- Host: 127.0.0.1    Database: train_station
 -- ------------------------------------------------------
 -- Server version	5.5.5-10.4.28-MariaDB
 
@@ -16,30 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `conto_corrente`
+-- Table structure for table `carte_di_credito`
 --
 
-DROP TABLE IF EXISTS `conto_corrente`;
+DROP TABLE IF EXISTS `carte_di_credito`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `conto_corrente` (
-  `ContoID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `carte_di_credito` (
+  `CartaID` int(11) NOT NULL AUTO_INCREMENT,
   `UserID` int(11) DEFAULT NULL,
-  `Saldo` decimal(10,2) DEFAULT 0.00,
-  PRIMARY KEY (`ContoID`),
+  `NumeroCarta` varchar(16) NOT NULL,
+  PRIMARY KEY (`CartaID`),
   KEY `UserID` (`UserID`),
-  CONSTRAINT `conto_corrente_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `utenti_registrati` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CONSTRAINT `carte_di_credito_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `utenti_registrati` (`UserID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `conto_corrente`
+-- Dumping data for table `carte_di_credito`
 --
 
-LOCK TABLES `conto_corrente` WRITE;
-/*!40000 ALTER TABLE `conto_corrente` DISABLE KEYS */;
-INSERT INTO `conto_corrente` VALUES (1,1,3438.92),(3,3,230.00),(5,4,0.00);
-/*!40000 ALTER TABLE `conto_corrente` ENABLE KEYS */;
+LOCK TABLES `carte_di_credito` WRITE;
+/*!40000 ALTER TABLE `carte_di_credito` DISABLE KEYS */;
+INSERT INTO `carte_di_credito` VALUES (1,1,'4944114198248532'),(2,2,'4529987896441731'),(3,3,'4350837573885362');
+/*!40000 ALTER TABLE `carte_di_credito` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-23 11:00:02
+-- Dump completed on 2024-01-07 11:08:11

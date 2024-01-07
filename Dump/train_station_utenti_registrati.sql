@@ -16,28 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `stazione`
+-- Table structure for table `utenti_registrati`
 --
 
-DROP TABLE IF EXISTS `stazione`;
+DROP TABLE IF EXISTS `utenti_registrati`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `stazione` (
-  `id_stazione` int(11) NOT NULL AUTO_INCREMENT,
-  `nome_stazione` varchar(45) NOT NULL,
-  `posizione_km` decimal(8,3) NOT NULL,
-  PRIMARY KEY (`id_stazione`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `utenti_registrati` (
+  `UserID` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `cognome` varchar(45) NOT NULL,
+  `codice_fiscale` varchar(255) NOT NULL,
+  `data_di_nascita` datetime NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `ruolo` varchar(45) NOT NULL DEFAULT 'registrato',
+  PRIMARY KEY (`UserID`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `stazione`
+-- Dumping data for table `utenti_registrati`
 --
 
-LOCK TABLES `stazione` WRITE;
-/*!40000 ALTER TABLE `stazione` DISABLE KEYS */;
-INSERT INTO `stazione` VALUES (1,'Torre Spavento',0.000),(2,'Prato Terra',2.700),(3,'Rocca Pietrosa',7.580),(4,'Villa Pietrosa',12.680),(5,'Villa Santa Maria',16.900),(6,'Pietra Santa Maria',23.950),(7,'Castro Marino',31.500),(8,'Porto Spigola',39.500),(9,'Porto San Felice',46.000),(10,'Villa San Felice',54.680);
-/*!40000 ALTER TABLE `stazione` ENABLE KEYS */;
+LOCK TABLES `utenti_registrati` WRITE;
+/*!40000 ALTER TABLE `utenti_registrati` DISABLE KEYS */;
+INSERT INTO `utenti_registrati` VALUES (1,'Train','Station','STTTRN24S01F205Z','2024-01-01 00:00:00','train.station@esercente.it','$2y$10$iQPsSUaVzCnOFtYfBzHrQ.q1mZ875NtzHf3xE5wQnPWFqXazaTFZa','esercente'),(2,'Carlo','Rossi','RSSCRL70A01F205W','1970-01-01 00:00:00','carlo.rossi@m2m.it','$2y$10$k3s7ZhIKzp.kY9oWAyzs1OgJRzFZ74yG3tHBxgqzJFUDd/K2Hk3Tu','m2m'),(3,'Federico','Di Maio','DMIFRC90D04F205J','1990-04-04 00:00:00','f.dimaio@registrato.it','$2y$10$4IruR.AXjoMEwzb5O4jZpeZTISIQWhM7me6l1bThAmWI63YRRD.N6','registrato');
+/*!40000 ALTER TABLE `utenti_registrati` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-16  8:33:00
+-- Dump completed on 2024-01-07 11:08:11

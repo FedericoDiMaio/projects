@@ -16,31 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `composizione_treno`
+-- Table structure for table `conto_corrente`
 --
 
-DROP TABLE IF EXISTS `composizione_treno`;
+DROP TABLE IF EXISTS `conto_corrente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `composizione_treno` (
-  `id_treno` int(11) NOT NULL AUTO_INCREMENT,
-  `id_carrozze` varchar(45) NOT NULL,
-  `id_locomotive` varchar(45) NOT NULL,
-  `numero_posti_totale` int(11) NOT NULL,
-  `data_inizio_servizio` datetime NOT NULL,
-  `data_fine_servizio` datetime NOT NULL,
-  PRIMARY KEY (`id_treno`)
+CREATE TABLE `conto_corrente` (
+  `ContoID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) DEFAULT NULL,
+  `Saldo` decimal(10,2) DEFAULT 0.00,
+  PRIMARY KEY (`ContoID`),
+  KEY `UserID` (`UserID`),
+  CONSTRAINT `conto_corrente_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `utenti_registrati` (`UserID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `composizione_treno`
+-- Dumping data for table `conto_corrente`
 --
 
-LOCK TABLES `composizione_treno` WRITE;
-/*!40000 ALTER TABLE `composizione_treno` DISABLE KEYS */;
-INSERT INTO `composizione_treno` VALUES (1,'3,4,5','1,2',132,'2023-11-01 00:00:00','2023-11-02 00:00:00'),(2,'1,2,3','2,3',108,'2023-11-01 00:00:00','2023-11-02 00:00:00'),(3,'1,2,3,4,5','1,2',204,'2023-11-08 00:00:00','2023-11-09 00:00:00');
-/*!40000 ALTER TABLE `composizione_treno` ENABLE KEYS */;
+LOCK TABLES `conto_corrente` WRITE;
+/*!40000 ALTER TABLE `conto_corrente` DISABLE KEYS */;
+INSERT INTO `conto_corrente` VALUES (1,1,14.40),(2,2,0.00),(3,3,35.60);
+/*!40000 ALTER TABLE `conto_corrente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-16  8:33:01
+-- Dump completed on 2024-01-07 11:08:12

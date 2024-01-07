@@ -15,10 +15,13 @@
     session_start();
     $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';
     $cognome = isset($_SESSION['cognome']) ? $_SESSION['cognome'] : '';
+    $id_utente = isset($_SESSION['id_utente']) ? $_SESSION['id_utente'] : '';
+
+
     
     if (!empty($nome) && !empty($cognome)) {
         
-        $sql_utente = "SELECT id_utente FROM utenti_registrati_tr WHERE nome = :nome AND cognome = :cognome";
+        $sql_utente = "SELECT id_utente FROM utenti_registrati_train WHERE nome = :nome AND cognome = :cognome";
         $stmt_utente = $db->prepare($sql_utente);
         $stmt_utente->bindParam(':nome', $nome, PDO::PARAM_STR);
         $stmt_utente->bindParam(':cognome', $cognome, PDO::PARAM_STR);
@@ -149,6 +152,7 @@
     <nav>
         <li><a href="./out.php"><button>Logout</button></a></li>
     </nav>
+    <p></p>
 
     <?php
       

@@ -16,30 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `viaggio`
+-- Table structure for table `locomotiva`
 --
 
-DROP TABLE IF EXISTS `viaggio`;
+DROP TABLE IF EXISTS `locomotiva`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `viaggio` (
-  `id_viaggio` int(11) NOT NULL,
-  `id_treno` int(11) DEFAULT NULL,
-  `orario_partenza` datetime DEFAULT NULL,
-  `orario_arrivo` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_viaggio`),
-  KEY `id_treno_idx` (`id_treno`),
-  CONSTRAINT `id_treno` FOREIGN KEY (`id_treno`) REFERENCES `treno` (`id_treno`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `locomotiva` (
+  `id_locomotiva` int(11) NOT NULL AUTO_INCREMENT,
+  `tipo_locomotiva` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_locomotiva`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `viaggio`
+-- Dumping data for table `locomotiva`
 --
 
-LOCK TABLES `viaggio` WRITE;
-/*!40000 ALTER TABLE `viaggio` DISABLE KEYS */;
-/*!40000 ALTER TABLE `viaggio` ENABLE KEYS */;
+LOCK TABLES `locomotiva` WRITE;
+/*!40000 ALTER TABLE `locomotiva` DISABLE KEYS */;
+INSERT INTO `locomotiva` VALUES (1,'SFT.3 - Cavour'),(2,'SFT.4 - Vittorio Emanuele'),(3,'SFT.6 - Garibaldi');
+/*!40000 ALTER TABLE `locomotiva` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-16  8:33:01
+-- Dump completed on 2024-01-07 11:08:12

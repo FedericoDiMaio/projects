@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>TrainStation profilo esercizio</title>
+    <title>TrainStation profilo Amministrativo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 	
 </head>
@@ -68,7 +68,7 @@
         $data_inizio_servizio_str = $data_inizio_servizio->format('Y-m-d 00:00:00');
         $data_fine_servizio_str = $data_fine_servizio->format('Y-m-d 00:00:00');
 
-
+/*
         $sql_conta_treni = "SELECT COUNT(*) as conteggio FROM composizione_treno 
                         WHERE data_inizio_servizio = :data";
         $stmt_conta_treni = $db->prepare($sql_conta_treni);
@@ -97,7 +97,7 @@
             header("location: ./composizioneTrenoError.html");
             exit;
         }
-
+*/
         try {
 
             $query = $db->prepare("INSERT INTO composizione_treno (id_carrozze, id_locomotive, numero_posti_totale, data_inizio_servizio, data_fine_servizio) 
@@ -113,7 +113,7 @@
             $query->execute();
 
 
-            header("location: ./utenteComposizioneEffettuata.html");
+            header("location: ./utenteComposizioneAmministrativoEffettuata.html");
             exit();
         } catch (PDOException $e) {
             echo 'Errore durante l\'inserimento nel database: ' . $e->getMessage();
@@ -128,12 +128,12 @@
     <header>
 
         <h1>Benvenuto <?php echo $nome . ' ' . $cognome; ?></h1>
-        <h2>Profilo esercizio</h2>
+        <h2>Profilo Amministrativo</h2>
 
     </header>
 
 
-    <form action="./utenteComposizione.php" method="POST">
+    <form action="./utenteComposizioneAmministrativo.php" method="POST">
 
 
         <div class="form-group">
@@ -167,7 +167,7 @@
             }
 
             ?>
-<p></p>
+        <p></p>
         </div>
 
         <div class="form-group">
@@ -181,16 +181,16 @@
         </div>
 
         <button type="submit">Componi treno</button>
+        <p></p>
 
-<p></p>
 
     </form>
 
 
 
-    <form action="./utenteComposizioneCheckDelete.php" method="POST">
+    <form action="./utenteAmministrativoCheckDelete.php" method="POST">
 
-        <label for="treni">Treni disponibili</label>
+        <label for="treni">Treni attivi</label>
 
 
 
@@ -229,7 +229,7 @@
     </form>
 <p></p>
 
-    <a href="./out.php"><button>Logout</button></a><br>
+    <a href="./utenteAmministrativo.php"><button>profilo amministrativo</button></a><br>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 	
 </body>

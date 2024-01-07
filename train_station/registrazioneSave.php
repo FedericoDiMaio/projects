@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 
-    $query_verifica = $db->prepare('SELECT COUNT(*) FROM utenti_registrati_tr WHERE email = :email');
+    $query_verifica = $db->prepare('SELECT COUNT(*) FROM utenti_registrati_train WHERE email = :email');
     $query_verifica->bindParam(':email', $email, PDO::PARAM_STR);
     $query_verifica->execute();
     $utente_esiste = $query_verifica->fetchColumn();
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 
-    $query_inserimento = $db->prepare('INSERT INTO utenti_registrati_tr (nome, cognome, data_di_nascita, codice_fiscale, email, password) VALUES (:nome, :cognome, :data_di_nascita, :codice_fiscale, :email, :password)');
+    $query_inserimento = $db->prepare('INSERT INTO utenti_registrati_train (nome, cognome, data_di_nascita, codice_fiscale, email, password) VALUES (:nome, :cognome, :data_di_nascita, :codice_fiscale, :email, :password)');
     $query_inserimento->bindParam(':nome', $nome, PDO::PARAM_STR);
     $query_inserimento->bindParam(':cognome', $cognome, PDO::PARAM_STR);
     $query_inserimento->bindParam(':data_di_nascita', $data_di_nascita, PDO::PARAM_STR);

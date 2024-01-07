@@ -5,7 +5,7 @@
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $q = $db->prepare("SELECT * FROM utenti_registrati_tr WHERE email = :email");
+    $q = $db->prepare("SELECT * FROM utenti_registrati_train WHERE email = :email");
     $q->bindParam(':email', $email, PDO::PARAM_STR);
     $q->execute();
     $q->setFetchMode(PDO::FETCH_ASSOC);
@@ -16,6 +16,7 @@
             if (password_verify($password, $row['password'])) {
 
                 session_start();
+                $_SESSION['UserID'] = $row['UserID'];
                 $_SESSION['nome'] = $row['nome'];
                 $_SESSION['cognome'] = $row['cognome'];
 

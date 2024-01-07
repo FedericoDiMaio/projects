@@ -44,8 +44,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query_inserimento_utente->bindParam(':codice_fiscale', $codice_fiscale, PDO::PARAM_STR);
         $query_inserimento_utente->bindParam(':email', $email, PDO::PARAM_STR);
         $query_inserimento_utente->bindParam(':password', $hashed_password, PDO::PARAM_STR);
+        
+        $query_inserimento = $db->prepare('INSERT INTO utenti_registrati_train (nome, cognome, data_di_nascita, codice_fiscale, email, password) VALUES (:nome, :cognome, :data_di_nascita, :codice_fiscale, :email, :password)');
+        $query_inserimento->bindParam(':nome', $nome, PDO::PARAM_STR);
+        $query_inserimento->bindParam(':cognome', $cognome, PDO::PARAM_STR);
+        $query_inserimento->bindParam(':data_di_nascita', $data_di_nascita, PDO::PARAM_STR);
+        $query_inserimento->bindParam(':codice_fiscale', $codice_fiscale, PDO::PARAM_STR);
+        $query_inserimento->bindParam(':email', $email, PDO::PARAM_STR);
+        $query_inserimento->bindParam(':password', $hashed_password, PDO::PARAM_STR);
+        
+        
         $query_inserimento_utente->execute();
-
+        $query_inserimento->execute();
         
         $lastInsertedUserId = $db->lastInsertId();
 

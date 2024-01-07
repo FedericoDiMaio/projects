@@ -3,6 +3,8 @@
 
 <head>
     <title>pay_stream profilo registrato</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	
 </head>
 
 <body>
@@ -193,7 +195,7 @@
                 echo "<table border='1'>
                         <caption>Estratto Conto</caption>
                         <tr>
-                            <th>Operazione</th>
+                            
                             
                             <th>Uscite</th>
                             <th>Entrate</th>
@@ -202,7 +204,7 @@
             
                 foreach ($estratto_conto_rows as $row) {
                     echo "<tr>
-                            <td>{$row['operazione']}</td>
+                            
                             
                             <td>{$row['uscite']}</td>
                             <td>{$row['entrate']}</td>
@@ -218,6 +220,8 @@
     <nav><br>
         <li><a href="./out.php"><button>Logout</button></a></li>
     </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+	
 </body>
 
 </html>

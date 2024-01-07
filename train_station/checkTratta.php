@@ -8,7 +8,7 @@ $id_utente = isset($_SESSION['id_utente']) ? $_SESSION['id_utente'] : '';
 $stazione_partenza = $_SESSION['stazione_partenza'];
 $stazione_destinazione = $_SESSION['stazione_destinazione'];
 $costo_biglietto = $_SESSION['costo_biglietto'];
-$data_orario_partenza = $_SESSION['data_orario_partenza'];
+//$data_orario_partenza = $_SESSION['data_orario_partenza'];
 $orario_partenza = $_SESSION['orario_partenza'];
 $somma_posizione_km = $_SESSION['somma_posizione_km'];
 $tempo_di_percorrenza_hhmm = $_SESSION['tempo_di_percorrenza_hhmm'];
@@ -16,6 +16,12 @@ $tempo_di_arrivo = $_SESSION['tempo_di_arrivo'];
 $data_partenza_formatted = $_SESSION['data_partenza_formatted'];
 $orario_partenza_formatted = $_SESSION['orario_partenza_formatted'];
 $id_treno_selezionato = $_SESSION['id_treno_selezionato'];
+
+echo "id". $id_utente;
+echo "somma posizione km".$somma_posizione_km;
+echo "stazione partenza".$stazione_partenza;
+echo "stazione destinazione".$stazione_destinazione;
+echo "costo biglietto".$costo_biglietto;
 
 if (!empty($id_treno_selezionato)) {
     try {
@@ -56,6 +62,9 @@ $orario_partenza = new DateTime();
 $data_orario_partenza = new DateTime();
 $tempo_arrivo = new DateTime();
 $tempo_percorrenza = new DateTime();
+
+echo "data orario partenza".$data_orario_partenza->format('Y-m-d H:i:s');
+echo "posto assegnato".$posto_assegnato;
 
 $stmt = $db->prepare("INSERT INTO tratta (distanza_km, costo_biglietto, id_stazione_partenza, id_stazione_arrivo, data_orario_partenza, id_utente, posto) VALUES (:distanza_km, :costo_biglietto, :id_stazione_partenza, :id_stazione_arrivo, :data_orario_partenza, :id_utente, :posto)");
 
